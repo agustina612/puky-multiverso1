@@ -11,6 +11,7 @@
             --beige-medio: #e5dfd9;
             --texto: #4a4a4a;
             --dorado: #c5b358;
+            --rojo-suave: #e57373;
         }
 
         body, html { margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; background-color: #fff; color: var(--texto); overflow-x: hidden; }
@@ -53,7 +54,7 @@
             cursor: pointer;
         }
 
-        /* --- MENÚ DE CÍRCULOS (Categorías) --- */
+        /* --- CATEGORÍAS --- */
         .category-menu {
             display: flex;
             justify-content: center;
@@ -94,15 +95,16 @@
         .section-title { font-family: 'Playfair Display', serif; text-align: center; margin-bottom: 40px; font-size: 1.8rem; }
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
         
-        .card { text-align: center; background: #fff; padding-bottom: 15px; border-radius: 4px; overflow: hidden; }
+        .card { text-align: center; background: #fff; padding-bottom: 15px; border-radius: 4px; overflow: hidden; border: 1px solid #f9f9f9; }
         .card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; margin-bottom: 10px; }
         .card h3 { font-family: 'Playfair Display', serif; font-size: 0.9rem; margin: 10px 0 5px; }
         .precio { font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 10px; }
         
-        select { width: 90%; padding: 5px; margin-bottom: 10px; border: 1px solid var(--beige-medio); font-size: 0.7rem; }
-        .btn-add { width: 90%; padding: 10px; background: var(--texto); color: white; border: none; cursor: pointer; text-transform: uppercase; font-size: 0.65rem; }
+        select { width: 90%; padding: 5px; margin-bottom: 10px; border: 1px solid var(--beige-medio); font-size: 0.7rem; outline: none; }
+        .btn-add { width: 90%; padding: 10px; background: var(--texto); color: white; border: none; cursor: pointer; text-transform: uppercase; font-size: 0.65rem; transition: 0.3s; }
+        .btn-add:hover { background: #000; }
 
-        /* --- CARRITO FLOTANTE --- */
+        /* --- CARRITO --- */
         #cart-icon {
             position: fixed;
             right: 20px; bottom: 20px;
@@ -134,6 +136,19 @@
             width: 85%; max-width: 350px;
             padding: 25px;
             border-radius: 10px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .btn-vaciar {
+            background: none;
+            border: none;
+            color: var(--rojo-suave);
+            font-size: 0.65rem;
+            text-decoration: underline;
+            cursor: pointer;
+            padding: 0;
+            margin-bottom: 15px;
+            display: block;
         }
 
         @media (max-width: 600px) { .products-grid { grid-template-columns: 1fr 1fr; gap: 10px; } }
@@ -177,45 +192,88 @@
 
 <div id="cart-modal">
     <div class="cart-content">
-        <h3 style="font-family:'Playfair Display'">Tu Carrito</h3>
-        <div id="cart-list" style="margin: 20px 0; border-top: 1px solid #eee; padding-top: 10px;"></div>
-        <p style="display:flex; justify-content:space-between; font-weight:600;"><span>Total:</span><span id="cart-total">$0</span></p>
-        <button class="btn-add" style="background:#25d366; width:100%" onclick="comprarWhatsApp()">COMPRAR POR WHATSAPP</button>
-        <p onclick="toggleCart()" style="text-align:center; font-size:0.7rem; margin-top:15px; cursor:pointer;">Cerrar</p>
+        <h3 style="font-family:'Playfair Display'; margin-top: 0;">Tu Carrito</h3>
+        <button class="btn-vaciar" onclick="vaciarCarrito()">Vaciar carrito</button>
+        <div id="cart-list" style="margin: 10px 0; border-top: 1px solid #eee; padding-top: 10px;"></div>
+        <p style="display:flex; justify-content:space-between; font-weight:600; border-top: 1px solid #eee; padding-top: 10px;">
+            <span>Total:</span><span id="cart-total">$0</span>
+        </p>
+        <button class="btn-add" style="background:#25d366; width:100%; margin-top: 10px;" onclick="comprarWhatsApp()">COMPRAR POR WHATSAPP</button>
+        <p onclick="toggleCart()" style="text-align:center; font-size:0.7rem; margin-top:15px; cursor:pointer; color: #888;">Cerrar</p>
     </div>
 </div>
 
 <script>
     function entrarTienda() { document.getElementById('intro-screen').classList.add('hide-intro'); }
+    
     function showCategory(id) {
         document.querySelectorAll('.category-view').forEach(v => v.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
+        const target = document.getElementById(id);
+        if(target) target.classList.add('active');
         window.scrollTo(0,0);
     }
 
-    const productos = [
-        { id: 1, cat: "anillos", nombre: "Anillo Corazón", precio: 3500, img: "img/anillos/anillocorazon.png", modelos: ["Simple"] },
-        { id: 2, cat: "anillos", nombre: "Anillo Corona", precio: 3800, img: "img/anillos/anillocorona.png", modelos: ["Dorado"] },
-        { id: 3, cat: "anillos", nombre: "Anillo Flor Rosa", precio: 3500, img: "img/anillos/anilloflorrosa.png", modelos: ["Único"] },
-        { id: 4, cat: "anillos", nombre: "Flor Blanca", precio: 3000, img: "img/anillos/flor-blanca.png", modelos: ["Blanco"] },
-        { id: 5, cat: "aros", nombre: "Aros Modelo 3", precio: 3200, img: "img/aros/aros3.png", modelos: ["Surtido"] },
-        { id: 6, cat: "aros", nombre: "Pack Aros II", precio: 4500, img: "img/aros/arospack2.png", modelos: ["Especial"] },
-        { id: 7, cat: "aros", nombre: "Pack de Aros", precio: 4200, img: "img/aros/packdearos.png", modelos: ["Acero"] },
-        { id: 8, cat: "collares", nombre: "Collar Perlas Simple", precio: 5000, img: "img/collares/collarperlassimple.png", modelos: ["Básico"] },
-        { id: 9, cat: "collares", nombre: "Collar Perlas Corazón", precio: 5500, img: "img/collares/perlascorazon.png", modelos: ["Romántico"] },
-        { id: 10, cat: "pircing", nombre: "Piercing Pupo", precio: 2500, img: "img/pircing/pircingpupo.png", modelos: ["Acero"] },
-        { id: 11, cat: "pulseras", nombre: "Pulsera Mariposa", precio: 4000, img: "img/pulseras/perlasmariposa.png", modelos: ["Dorado"] },
-        { id: 12, cat: "pulseras", nombre: "Pulsera Flores Negras", precio: 3900, img: "img/pulseras/pulserasfloresnegras.png", modelos: ["Noche"] }
-    ];
+const productos = [
+    // --- ANILLOS ---
+    { id: 1, cat: "anillos", nombre: "Anillo Corazón", precio: 3500, img: "img/anillos/anillocorazon.jpg", modelos: ["Simple"] },
+    { id: 2, cat: "anillos", nombre: "Anillo Corona", precio: 3800, img: "img/anillos/anillocorona.jpg", modelos: ["Dorado"] },
+    { id: 3, cat: "anillos", nombre: "Anillo Flor Rosa", precio: 3500, img: "img/anillos/florrosa.png", modelos: ["Único"] }, 
+    { id: 4, cat: "anillos", nombre: "Flor Blanca", precio: 3000, img: "img/anillos/anilloflorblanca.jpg", modelos: ["Blanco"] },
+    { id: 16, cat: "anillos", nombre: "Anillo Corazón II", precio: 3500, img: "img/anillos/anilloscorazon2.jpg", modelos: ["Doble"] },
 
+    // --- AROS ---
+    { id: 5, cat: "aros", nombre: "Aros Modelo 3", precio: 3200, img: "img/aros/aros3.jpg", modelos: ["Surtido"] },
+    { id: 6, cat: "aros", nombre: "Pack Aros II", precio: 4500, img: "img/aros/arospack2.jpg", modelos: ["Especial"] },
+    { id: 7, cat: "aros", nombre: "Pack de Aros", precio: 4200, img: "img/aros/packdearos.jpg", modelos: ["Acero"] },
+    { id: 13, cat: "aros", nombre: "Pack Negro y Gris", precio: 4000, img: "img/aros/arospacknegroygris.jpg", modelos: ["Surtido"] },
+
+    // --- PULSERAS ---
+    { id: 11, cat: "pulseras", nombre: "Pulsera Mariposa", precio: 4000, img: "img/pulseras/pulseramariposa.jpg", modelos: ["Perlas"] },
+    { id: 12, cat: "pulseras", nombre: "Flores Negras", precio: 3900, img: "img/pulseras/pulserasfloresnegras.jpg", modelos: ["Noche"] },
+    { id: 22, cat: "pulseras", nombre: "Corazón Rojo", precio: 4200, img: "img/pulseras/perlascorazonrojo.jpg", modelos: ["Rojo"] },
+    { id: 23, cat: "pulseras", nombre: "Pulsera Entrelazada", precio: 3800, img: "img/pulseras/perlasentrelazadas.jpg", modelos: ["Clásico"] },
+
+    // --- RELOJES ---
+    { id: 24, cat: "relojes", nombre: "Reloj Elegance", precio: 15000, img: "img/relojes/reloj1.jpg", modelos: ["Oro"] },
+    { id: 25, cat: "relojes", nombre: "Reloj Sport", precio: 12000, img: "img/relojes/reloj2.jpg", modelos: ["Negro"] },
+    { id: 26, cat: "relojes", nombre: "Reloj Classic", precio: 13500, img: "img/relojes/reloj3.jpg", modelos: ["Plata"] }, // <-- Agregué la coma aquí
+
+    // --- COLLARES ---
+    { id: 27, cat: "collares", nombre: "Collar Perlas Simple", precio: 5000, img: "img/collares/collarperlassimple.jpg", modelos: ["Básico"] },
+    { id: 28, cat: "collares", nombre: "Collar Perlas Corazón", precio: 5500, img: "img/collares/perlascorazon.jpg", modelos: ["Romántico"] },
+    { id: 29, cat: "collares", nombre: "Collar Modelo 1", precio: 4800, img: "img/collares/collar1.jpg", modelos: ["Elegante"] },
+    { id: 30, cat: "collares", nombre: "Collar de Perlas", precio: 5200, img: "img/collares/collarperlas.jpg", modelos: ["Clásico"] },
+
+    // --- PIERCINGS ---
+    { id: 31, cat: "pircing", nombre: "Piercing Pupo", precio: 2500, img: "img/pircing/pircingpupo.jpg", modelos: ["Acero"] },
+    { id: 32, cat: "pircing", nombre: "Piercing Pupo I", precio: 2500, img: "img/pircing/pircingpupo1.jpg", modelos: ["Strass"] },
+    { id: 33, cat: "pircing", nombre: "Piercing Modelo 2", precio: 2800, img: "img/pircing/pircing2.jpg", modelos: ["Diseño"] }
+];
     let carrito = [];
 
     function render() {
+        const grids = document.querySelectorAll('.products-grid');
+        grids.forEach(g => g.innerHTML = "");
+
         productos.forEach(p => {
-            const card = `<div class="card"><img src="${p.img}"><h3>${p.nombre}</h3><span class="precio">$${p.precio}</span><select id="sel-${p.id}">${p.modelos.map(m => `<option>${m}</option>`).join('')}</select><button class="btn-add" onclick="agregar(${p.id})">Añadir</button></div>`;
+            const card = `
+                <div class="card">
+                    <img src="${p.img}" onerror="this.src='https://via.placeholder.com/200?text=Imagen+No+Encontrada'">
+                    <h3>${p.nombre}</h3>
+                    <span class="precio">$${p.precio}</span>
+                    <select id="sel-${p.id}">
+                        ${p.modelos.map(m => `<option>${m}</option>`).join('')}
+                    </select>
+                    <button class="btn-add" onclick="agregar(${p.id})">Añadir</button>
+                </div>`;
+            
             const grid = document.getElementById(`grid-${p.cat}`);
             if(grid) grid.innerHTML += card;
-            if(p.id <= 4) document.getElementById('grid-inicio').innerHTML += card;
+            
+            if(p.id <= 4) {
+                const gridInicio = document.getElementById('grid-inicio');
+                if(gridInicio) gridInicio.innerHTML += card;
+            }
         });
     }
 
@@ -226,15 +284,31 @@
         actualizarUI();
     }
 
+    function vaciarCarrito() {
+        if(confirm("¿Seguro que quieres vaciar el carrito?")) {
+            carrito = [];
+            actualizarUI();
+        }
+    }
+
     function actualizarUI() {
         document.getElementById('cart-count').innerText = carrito.length;
         const list = document.getElementById('cart-list');
         let total = 0;
-        list.innerHTML = carrito.length === 0 ? "Bolsa vacía" : "";
-        carrito.forEach(i => {
-            total += i.precio;
-            list.innerHTML += `<div style="display:flex; justify-content:space-between; font-size:0.7rem; margin-bottom:5px;"><span>${i.nombre}</span><span>$${i.precio}</span></div>`;
-        });
+        
+        if (carrito.length === 0) {
+            list.innerHTML = "<p style='font-size:0.7rem; color:#aaa; text-align:center;'>Tu bolsa está vacía</p>";
+        } else {
+            list.innerHTML = "";
+            carrito.forEach(i => {
+                total += i.precio;
+                list.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; font-size:0.7rem; margin-bottom:8px;">
+                        <span>${i.nombre} <br><small style="color:#888;">(${i.modelo})</small></span>
+                        <span>$${i.precio}</span>
+                    </div>`;
+            });
+        }
         document.getElementById('cart-total').innerText = `$${total}`;
     }
 
@@ -244,7 +318,7 @@
     }
 
     function comprarWhatsApp() {
-        if(carrito.length === 0) return;
+        if(carrito.length === 0) return alert("Tu carrito está vacío");
         let total = carrito.reduce((s, i) => s + i.precio, 0);
         let msg = "¡Hola Mundo Liluk! 🌸 Pedido:%0A";
         carrito.forEach(i => msg += `- ${i.nombre} (${i.modelo}) $${i.precio}%0A`);
