@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo Liluk | Tienda Oficial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;1,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --beige-claro: #f4f1ee;
+            --beige-medio: #e5dfd9;
+            --texto: #4a4a4a;
+            --dorado: #c5b358;
+        }
+
+        body, html { margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; background-color: #fff; color: var(--texto); overflow-x: hidden; }
+
+        /* --- INTRO --- */
+        #intro-screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            background-color: var(--beige-claro);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            transition: transform 0.8s ease-in-out;
+        }
+        .hide-intro { transform: translateY(-100%); }
+        .btn-entrar { padding: 10px 40px; background: none; border: 1px solid #000; cursor: pointer; letter-spacing: 2px; }
+
+        /* --- NAVEGACIÓN --- */
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background: white;
+            border-bottom: 1px solid var(--beige-claro);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--texto);
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin: 0 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        /* --- MENÚ DE CÍRCULOS (Categorías) --- */
+        .category-menu {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 30px 10px;
+            flex-wrap: wrap;
+            background-color: #fff;
+        }
+        .cat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            width: 75px;
+        }
+        .circle {
+            width: 60px;
+            height: 60px;
+            background-color: var(--beige-claro);
+            border-radius: 50%;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            font-size: 1.2rem;
+            border: 1px solid transparent;
+        }
+        .cat-item:hover .circle { border-color: var(--dorado); transform: scale(1.1); }
+        .cat-item span { font-size: 0.6rem; font-weight: 600; text-transform: uppercase; text-align: center; }
+
+        /* --- VISTAS --- */
+        .category-view { display: none; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .category-view.active { display: block; animation: fadeIn 0.5s; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .section-title { font-family: 'Playfair Display', serif; text-align: center; margin-bottom: 40px; font-size: 1.8rem; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        
+        .card { text-align: center; background: #fff; padding-bottom: 15px; border-radius: 4px; overflow: hidden; }
+        .card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; margin-bottom: 10px; }
+        .card h3 { font-family: 'Playfair Display', serif; font-size: 0.9rem; margin: 10px 0 5px; }
+        .precio { font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 10px; }
+        
+        select { width: 90%; padding: 5px; margin-bottom: 10px; border: 1px solid var(--beige-medio); font-size: 0.7rem; }
+        .btn-add { width: 90%; padding: 10px; background: var(--texto); color: white; border: none; cursor: pointer; text-transform: uppercase; font-size: 0.65rem; }
+
+        /* --- CARRITO FLOTANTE --- */
+        #cart-icon {
+            position: fixed;
+            right: 20px; bottom: 20px;
+            background: var(--texto);
+            color: white;
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        #cart-count { position: absolute; top: -5px; right: -5px; background: var(--dorado); font-size: 0.6rem; padding: 3px 6px; border-radius: 50%; }
+
+        #cart-modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2500;
+        }
+        .cart-content {
+            background: white;
+            width: 85%; max-width: 350px;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 600px) { .products-grid { grid-template-columns: 1fr 1fr; gap: 10px; } }
+    </style>
+</head>
+<body>
+
+<div id="intro-screen">
+    <h1 style="font-family:'Playfair Display'; letter-spacing:3px;">Mundo Liluk</h1>
+    <button class="btn-entrar" onclick="entrarTienda()">DESCUBRIR</button>
+</div>
+
+<nav>
+    <a onclick="showCategory('inicio')">Inicio</a>
+    <a onclick="showCategory('nosotros')">Nosotros</a>
+</nav>
+
+<div class="category-menu">
+    <div class="cat-item" onclick="showCategory('anillos')"><div class="circle">💍</div><span>Anillos</span></div>
+    <div class="cat-item" onclick="showCategory('aros')"><div class="circle">✨</div><span>Aros</span></div>
+    <div class="cat-item" onclick="showCategory('collares')"><div class="circle">📿</div><span>Collares</span></div>
+    <div class="cat-item" onclick="showCategory('pircing')"><div class="circle">💎</div><span>Piercings</span></div>
+    <div class="cat-item" onclick="showCategory('pulseras')"><div class="circle">⌚</div><span>Pulseras</span></div>
+    <div class="cat-item" onclick="showCategory('relojes')"><div class="circle">🕒</div><span>Relojes</span></div>
+</div>
+
+<div id="inicio" class="category-view active"><h2 class="section-title">Novedades</h2><div class="products-grid" id="grid-inicio"></div></div>
+<div id="anillos" class="category-view"><h2 class="section-title">Anillos</h2><div class="products-grid" id="grid-anillos"></div></div>
+<div id="aros" class="category-view"><h2 class="section-title">Aros</h2><div class="products-grid" id="grid-aros"></div></div>
+<div id="collares" class="category-view"><h2 class="section-title">Collares</h2><div class="products-grid" id="grid-collares"></div></div>
+<div id="pircing" class="category-view"><h2 class="section-title">Piercings</h2><div class="products-grid" id="grid-pircing"></div></div>
+<div id="pulseras" class="category-view"><h2 class="section-title">Pulseras</h2><div class="products-grid" id="grid-pulseras"></div></div>
+<div id="relojes" class="category-view"><h2 class="section-title">Relojes</h2><div class="products-grid" id="grid-relojes"></div></div>
+
+<div id="nosotros" class="category-view">
+    <h2 class="section-title">Nuestra Historia</h2>
+    <p style="text-align:center; line-height:1.6;">Bienvenido a Mundo Liluk. Creamos piezas únicas con amor en Córdoba Capital.</p>
+</div>
+
+<div id="cart-icon" onclick="toggleCart()">🛒<span id="cart-count">0</span></div>
+
+<div id="cart-modal">
+    <div class="cart-content">
+        <h3 style="font-family:'Playfair Display'">Tu Carrito</h3>
+        <div id="cart-list" style="margin: 20px 0; border-top: 1px solid #eee; padding-top: 10px;"></div>
+        <p style="display:flex; justify-content:space-between; font-weight:600;"><span>Total:</span><span id="cart-total">$0</span></p>
+        <button class="btn-add" style="background:#25d366; width:100%" onclick="comprarWhatsApp()">COMPRAR POR WHATSAPP</button>
+        <p onclick="toggleCart()" style="text-align:center; font-size:0.7rem; margin-top:15px; cursor:pointer;">Cerrar</p>
+    </div>
+</div>
+
+<script>
+    function entrarTienda() { document.getElementById('intro-screen').classList.add('hide-intro'); }
+    function showCategory(id) {
+        document.querySelectorAll('.category-view').forEach(v => v.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    const productos = [
+        { id: 1, cat: "anillos", nombre: "Anillo Corazón", precio: 3500, img: "img/anillos/anillocorazon.png", modelos: ["Simple"] },
+        { id: 2, cat: "anillos", nombre: "Anillo Corona", precio: 3800, img: "img/anillos/anillocorona.png", modelos: ["Dorado"] },
+        { id: 3, cat: "anillos", nombre: "Anillo Flor Rosa", precio: 3500, img: "img/anillos/anilloflorrosa.png", modelos: ["Único"] },
+        { id: 4, cat: "anillos", nombre: "Flor Blanca", precio: 3000, img: "img/anillos/flor-blanca.png", modelos: ["Blanco"] },
+        { id: 5, cat: "aros", nombre: "Aros Modelo 3", precio: 3200, img: "img/aros/aros3.png", modelos: ["Surtido"] },
+        { id: 6, cat: "aros", nombre: "Pack Aros II", precio: 4500, img: "img/aros/arospack2.png", modelos: ["Especial"] },
+        { id: 7, cat: "aros", nombre: "Pack de Aros", precio: 4200, img: "img/aros/packdearos.png", modelos: ["Acero"] },
+        { id: 8, cat: "collares", nombre: "Collar Perlas Simple", precio: 5000, img: "img/collares/collarperlassimple.png", modelos: ["Básico"] },
+        { id: 9, cat: "collares", nombre: "Collar Perlas Corazón", precio: 5500, img: "img/collares/perlascorazon.png", modelos: ["Romántico"] },
+        { id: 10, cat: "pircing", nombre: "Piercing Pupo", precio: 2500, img: "img/pircing/pircingpupo.png", modelos: ["Acero"] },
+        { id: 11, cat: "pulseras", nombre: "Pulsera Mariposa", precio: 4000, img: "img/pulseras/perlasmariposa.png", modelos: ["Dorado"] },
+        { id: 12, cat: "pulseras", nombre: "Pulsera Flores Negras", precio: 3900, img: "img/pulseras/pulserasfloresnegras.png", modelos: ["Noche"] }
+    ];
+
+    let carrito = [];
+
+    function render() {
+        productos.forEach(p => {
+            const card = `<div class="card"><img src="${p.img}"><h3>${p.nombre}</h3><span class="precio">$${p.precio}</span><select id="sel-${p.id}">${p.modelos.map(m => `<option>${m}</option>`).join('')}</select><button class="btn-add" onclick="agregar(${p.id})">Añadir</button></div>`;
+            const grid = document.getElementById(`grid-${p.cat}`);
+            if(grid) grid.innerHTML += card;
+            if(p.id <= 4) document.getElementById('grid-inicio').innerHTML += card;
+        });
+    }
+
+    function agregar(id) {
+        const p = productos.find(x => x.id === id);
+        const mod = document.getElementById(`sel-${id}`).value;
+        carrito.push({...p, modelo: mod});
+        actualizarUI();
+    }
+
+    function actualizarUI() {
+        document.getElementById('cart-count').innerText = carrito.length;
+        const list = document.getElementById('cart-list');
+        let total = 0;
+        list.innerHTML = carrito.length === 0 ? "Bolsa vacía" : "";
+        carrito.forEach(i => {
+            total += i.precio;
+            list.innerHTML += `<div style="display:flex; justify-content:space-between; font-size:0.7rem; margin-bottom:5px;"><span>${i.nombre}</span><span>$${i.precio}</span></div>`;
+        });
+        document.getElementById('cart-total').innerText = `$${total}`;
+    }
+
+    function toggleCart() {
+        const m = document.getElementById('cart-modal');
+        m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    function comprarWhatsApp() {
+        if(carrito.length === 0) return;
+        let total = carrito.reduce((s, i) => s + i.precio, 0);
+        let msg = "¡Hola Mundo Liluk! 🌸 Pedido:%0A";
+        carrito.forEach(i => msg += `- ${i.nombre} (${i.modelo}) $${i.precio}%0A`);
+        msg += `%0A*Monto total a pagar: $${total}*`;
+        window.open(`https://wa.me/542646289600?text=${msg}`, '_blank');
+    }
+
+    render();
+</script>
+</body>
+</html>

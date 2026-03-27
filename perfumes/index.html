@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linfrank | Esencias Esenciales</title>
+    <style>
+        /* --- ESTILOS GENERALES (Toque Árabe-Minimalista) --- */
+        :root {
+            --dorado: #C5A059; /* Un dorado suave, no chillón */
+            --crema: #FDFBF8; /* Fondo muy claro, elegante */
+            --oscuro: #1A1A1A; /* Texto casi negro */
+            --acento: #8B0000; /* Un rojo borgoña profundo */
+        }
+
+        body {
+            font-family: 'Crimson Text', serif; /* Fuente elegante con remates */
+            margin: 0;
+            background-color: var(--crema);
+            color: var(--oscuro);
+        }
+
+        /* Fuentes de Google: Elegant y Serif */
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap');
+
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+        /* --- HEADER / NAVEGACIÓN --- */
+        header {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--dorado);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            color: var(--dorado);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin: 0;
+        }
+
+        /* --- SECCIÓN HÉROE (Imagen Principal) --- */
+        .hero {
+            height: 70vh;
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                              url('https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=1600'); /* Imagen de perfume de lujo */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+        }
+
+        .hero-content {
+            border: 2px solid var(--dorado);
+            padding: 40px;
+            background-color: rgba(0,0,0,0.5);
+            border-radius: 10px;
+        }
+
+        .hero h2 { font-size: 3rem; margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; margin-bottom: 20px; font-style: italic; }
+
+        /* --- PRODUCTOS --- */
+        .productos { padding: 50px 20px; text-align: center; }
+        
+        /* Patrón de fondo geométrico árabe suave */
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .producto-card {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .producto-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-color: var(--dorado);
+        }
+
+        /* Imagen de marcador de posición para los perfumes */
+        .producto-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .producto-card h3 { color: var(--oscuro); margin: 10px 0; font-size: 1.4rem;}
+        .producto-card .precio { color: var(--dorado); font-weight: bold; font-size: 1.3rem; margin-bottom: 15px; }
+
+        /* --- BOTONES --- */
+        .btn {
+            background-color: var(--oscuro);
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+        .btn:hover { background-color: var(--dorado); }
+
+        /* Botón específico de "Agregar" */
+        .btn-add { background-color: #fff; color: var(--oscuro); border: 1px solid var(--oscuro); }
+        .btn-add:hover { background-color: var(--oscuro); color: #fff; }
+
+        /* --- CARRITO DE COMPRAS (Barra Lateral) --- */
+        #carrito-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px; /* Oculto por defecto */
+            width: 350px;
+            height: 100vh;
+            background: #fff;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+            z-index: 2000;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border-left: 2px solid var(--dorado);
+        }
+
+        #carrito-sidebar.active { right: 0; }
+
+        .carrito-header {
+            padding: 20px;
+            background: var(--crema);
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-carrito { font-size: 1.5rem; cursor: pointer; color: var(--acento); }
+
+        #carrito-items {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .carrito-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        .carrito-footer {
+            padding: 20px;
+            border-top: 2px solid var(--dorado);
+            background: var(--crema);
+        }
+
+        .total-container {
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .btn-whatsapp {
+            background-color: #25d366; /* Verde WhatsApp */
+            color: #fff;
+            width: 100%;
+            padding: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .btn-whatsapp:hover { background-color: #1eb954; }
+
+        /* Ícono flotante del carrito */
+        .cart-icon-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--dorado);
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 999;
+        }
+        #cart-count { font-size: 1rem; margin-left: 5px; font-weight: bold;}
+
+    </style>
+</head>
+<body>
+
+    <div class="cart-icon-float" onclick="toggleCarrito()">
+        🛒<span id="cart-count">0</span>
+    </div>
+
+    <header>
+        <h1 class="logo">Linfrank</h1>
+        <p style="margin: 5px 0 0; font-style: italic; color: #666; font-size: 0.9rem;">Esencias Esenciales</p>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Oud Real</h2>
+            <p>Místico, profundo y eterno. Una joya de oriente.</p>
+            <a href="#productos" class="btn">Explorar</a>
+        </div>
+    </section>
+
+    <section id="productos" class="productos">
+        <h2>Nuestra Colección</h2>
+        
+        <div class="productos-grid">
+            
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1619994403773-a117098c6024?q=80&w=400" alt="Perfume 1">
+                <h3>Jasmin del Desierto</h3>
+                <p>Ligero, floral y exótico.</p>
+                <p class="precio">$35.500</p>
+                <button class="btn btn-add" onclick="agregarAlCarrito('Jasmin del Desierto', 35500)">Agregar al Carrito</button>
+            </div>
+
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=400" alt="Perfume 2">
+                <h3>Oud Místico</h3>
+                <p>Amaderado, intenso y duradero.</p>
+                <p class="precio">$48.000</p>
+                <button class="btn btn-add" onclick="agregarAlCarrito('Oud Místico', 48000)">Agregar al Carrito</button>
+            </div>
+
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1547887558-f938d21c97a9?q=80&w=400" alt="Perfume 3">
+                <h3>Rosa Árabe</h3>
+                <p>Dulce, especiado y seductor.</p>
+                <p class="precio">$39.900</p>
+                <button class="btn btn-add" onclick="agregarAlCarrito('Rosa Árabe', 39900)">Agregar al Carrito</button>
+            </div>
+
+        </div>
+    </section>
+
+    <div id="carrito-sidebar">
+        <div class="carrito-header">
+            <h3>Tu Carrito</h3>
+            <span class="close-carrito" onclick="toggleCarrito()">×</span>
+        </div>
+
+        <div id="carrito-items">
+            <p style="text-align:center; color:#999;">Tu carrito está vacío.</p>
+        </div>
+
+        <div class="carrito-footer">
+            <div class="total-container">
+                <span>Total:</span>
+                <span id="carrito-total">$0</span>
+            </div>
+            <button class="btn btn-whatsapp" onclick="enviarPedidoWhatsApp()">
+                Finalizar Pedido por WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- VARIABLES GLOBALES ---
+        let carrito = [];
+        const telefono = "542646289600"; // Tu número con el prefijo de país 54
+
+        // --- FUNCIONES DEL CARRITO ---
+
+        // Abrir/Cerrar la barra lateral
+        function toggleCarrito() {
+            const sidebar = document.getElementById('carrito-sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Agregar producto
+        function agregarAlCarrito(nombre, precio) {
+            // Verificar si el producto ya está en el carrito
+            const itemExistente = carrito.find(item => item.nombre === nombre);
+
+            if (itemExistente) {
+                itemExistente.cantidad++;
+            } else {
+                carrito.push({ nombre: nombre, precio: precio, cantidad: 1 });
+            }
+
+            actualizarInterfaz();
+        }
+
+        // Eliminar producto
+        function eliminarDelCarrito(nombre) {
+            carrito = carrito.filter(item => item.nombre !== nombre);
+            actualizarInterfaz();
+        }
+
+        // Actualizar el HTML del carrito
+        function actualizarInterfaz() {
+            const containerItems = document.getElementById('carrito-items');
+            const containerTotal = document.getElementById('carrito-total');
+            const containerCount = document.getElementById('cart-count');
+            
+            // Limpiar contenido
+            containerItems.innerHTML = '';
+            
+            if (carrito.length === 0) {
+                containerItems.innerHTML = '<p style="text-align:center; color:#999;">Tu carrito está vacío.</p>';
+                containerTotal.innerText = '$0';
+                containerCount.innerText = '0';
+                return;
+            }
+
+            let total = 0;
+            let totalProductos = 0;
+
+            // Dibujar cada producto en el carrito
+            carrito.forEach(item => {
+                total += item.precio * item.cantidad;
+                totalProductos += item.cantidad;
+
+                const itemHTML = `
+                    <div class="carrito-item">
+                        <div>
+                            <strong>${item.nombre}</strong><br>
+                            <span style="color:#666">${item.cantidad} x $${item.precio.toLocaleString('es-AR')}</span>
+                        </div>
+                        <button style="background:none; border:none; color:var(--acento); cursor:pointer;" onclick="eliminarDelCarrito('${item.nombre}')">Eliminar</button>
+                    </div>
+                `;
+                containerItems.innerHTML += itemHTML;
+            });
+
+            // Actualizar Total y Contador
+            containerTotal.innerText = `$${total.toLocaleString('es-AR')}`;
+            containerCount.innerText = totalProductos;
+        }
+
+        // --- FUNCIÓN DE WHATSAPP (EL CORAZÓN DE TU PEDIDO) ---
+        function enviarPedidoWhatsApp() {
+            if (carrito.length === 0) {
+                alert("Tu carrito está vacío. Agrega productos antes de finalizar.");
+                return;
+            }
+
+            // 1. Construir el mensaje
+            let mensaje = "¡Hola! Quisiera realizar el siguiente pedido a Linfrank:\n\n";
+            let total = 0;
+
+            carrito.forEach(item => {
+                const subtotal = item.precio * item.cantidad;
+                total += subtotal;
+                mensaje += `*- ${item.nombre}* (Cant: ${item.cantidad}) - $${subtotal.toLocaleString('es-AR')}\n`;
+            });
+
+            mensaje += `\n------------------\n`;
+            mensaje += `*TOTAL DE LA COMPRA:* $${total.toLocaleString('es-AR')}\n`;
+            mensaje += `------------------\n`;
+            mensaje += `¿Cómo coordinamos el pago y envío?`;
+
+            // 2. Codificar el mensaje para la URL
+            const mensajeCodificado = encodeURIComponent(mensaje);
+
+            // 3. Crear y abrir el enlace
+            const url = `https://wa.me/${telefono}?text=${mensajeCodificado}`;
+            window.open(url, '_blank');
+        }
+    </script>
+
+</body>
+</html>

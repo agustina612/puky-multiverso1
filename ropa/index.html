@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANFRA | Bienvenido al Mundo Anfra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #000; --accent: #ff4d4f; --gray-bg: #f8f8f8; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background-color: #fff; color: #000; overflow-x: hidden; }
+
+        /* PANTALLA DE BIENVENIDA (SPLASH SCREEN) */
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            background: #fff;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        #splash-screen.hidden { transform: translateY(-100%); }
+        
+        .splash-logo { font-size: 50px; font-weight: 900; letter-spacing: 10px; margin-bottom: 20px; animation: pulse 2s infinite; }
+        .splash-text { font-size: 14px; letter-spacing: 5px; text-transform: uppercase; color: #666; animation: fadeInText 1.5s ease; }
+
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+        @keyframes fadeInText { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* CONTENIDO PRINCIPAL (OCULTO INICIALMENTE) */
+        #main-content { opacity: 0; transition: opacity 1s ease 0.5s; }
+        #main-content.visible { opacity: 1; }
+
+        /* PROMO BAR & HEADER */
+        .promo-bar { background: var(--primary); color: #fff; text-align: center; padding: 8px; font-size: 11px; font-weight: bold; }
+        header { position: sticky; top: 0; background: #fff; z-index: 1000; border-bottom: 1px solid #eee; }
+        .header-main { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; }
+        .logo { font-size: 30px; font-weight: 900; letter-spacing: 3px; cursor: pointer; }
+        
+        /* BUSCADOR */
+        .search-box { flex: 0.5; }
+        .search-box input { width: 100%; padding: 12px; background: var(--gray-bg); border: none; border-radius: 4px; font-size: 13px; outline: none; }
+
+        /* NAV */
+        nav { display: flex; justify-content: center; gap: 25px; padding: 12px; border-top: 1px solid #f9f9f9; }
+        nav a { text-decoration: none; color: #000; font-size: 12px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.2s; position: relative; }
+        nav a.active-cat::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px; background: var(--accent); }
+
+        /* GRID PRODUCTOS */
+        .grid-container { padding: 30px 5%; }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .p-card { cursor: pointer; transition: 0.3s; }
+        .p-img-box { position: relative; aspect-ratio: 3/4; overflow: hidden; background: #f0f0f0; }
+        .p-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .p-card:hover img { transform: scale(1.05); }
+        .p-tag { position: absolute; top: 10px; left: 10px; background: #fff; padding: 3px 8px; font-size: 10px; font-weight: 900; }
+        .p-info { padding: 12px 0; }
+        .p-name { font-size: 12px; color: #555; margin-bottom: 5px; }
+        .p-price { font-weight: 900; font-size: 16px; }
+
+        /* CARRITO */
+        #cart-sidebar { position: fixed; right: -450px; top: 0; width: 400px; height: 100%; background: #fff; z-index: 2000; transition: 0.4s; padding: 40px; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
+        #cart-sidebar.open { right: 0; }
+        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1500; }
+
+        /* DETALLE PRODUCTO */
+        #view-product { display: none; padding: 40px 5%; animation: fadeIn 0.5s; }
+        .detail-flex { display: flex; gap: 50px; max-width: 1100px; margin: auto; }
+        .detail-img { flex: 1; }
+        .detail-info { flex: 1; }
+        .btn-buy { width: 100%; background: #000; color: #fff; padding: 20px; border: none; font-weight: 900; cursor: pointer; margin-top: 20px; letter-spacing: 2px; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+            .detail-flex { flex-direction: column; }
+            .search-box { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="splash-screen">
+    <div class="splash-logo">ANFRA</div>
+    <div class="splash-text">Bienvenido al mundo ANFRA</div>
+</div>
+
+<div id="main-content">
+    <div class="overlay" id="overlay" onclick="closeCart()"></div>
+    <div class="promo-bar">ENVÍO GRATIS EN PEDIDOS SUPERIORES A $99 🇦🇷</div>
+
+    <header>
+        <div class="header-main">
+            <div class="logo" onclick="location.reload()">ANFRA</div>
+            <div class="search-box">
+                <input type="text" id="main-search" placeholder="Buscar en la colección..." onkeyup="searchProducts()">
+            </div>
+            <div style="font-size: 20px; cursor: pointer;" onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
+        </div>
+        <nav>
+            <a onclick="filterCat('all')" id="cat-all" class="active-cat">TODO</a>
+            <a onclick="filterCat('vestidos')" id="cat-vestidos">VESTIDOS</a>
+            <a onclick="filterCat('tops')" id="cat-tops">TOPS</a>
+            <a onclick="filterCat('zapatos')" id="cat-zapatos">CALZADO</a>
+            <a onclick="filterCat('abrigos')" id="cat-abrigos">ABRIGOS</a>
+        </nav>
+    </header>
+
+    <main id="view-store">
+        <div class="grid-container">
+            <div class="grid" id="product-grid"></div>
+        </div>
+    </main>
+
+    <main id="view-product">
+        <div class="detail-flex">
+            <div class="detail-img">
+                <img id="d-img" src="" style="width:100%">
+            </div>
+            <div class="detail-info">
+                <h1 id="d-title" style="margin-bottom: 10px;"></h1>
+                <h2 id="d-price" style="color:var(--accent); margin-bottom: 20px;"></h2>
+                <p style="font-size:13px; margin-bottom: 10px;">TALLA:</p>
+                <div id="size-options" style="display:flex; gap:10px; margin-bottom:30px;"></div>
+                <button class="btn-buy" onclick="addToCart()">AÑADIR A LA BOLSA</button>
+                <p onclick="showStore()" style="text-decoration:underline; cursor:pointer; margin-top:30px; font-size:12px;">← VOLVER AL CATÁLOGO</p>
+            </div>
+        </div>
+    </main>
+
+    <div id="cart-sidebar">
+        <div style="display:flex; justify-content:space-between; margin-bottom:30px;">
+            <h3>MI BOLSA</h3>
+            <span onclick="closeCart()" style="cursor:pointer">✕</span>
+        </div>
+        <div id="cart-items" style="height:70%; overflow-y:auto;"></div>
+        <div style="border-top:2px solid #000; padding-top:20px;">
+            <div style="display:flex; justify-content:space-between; font-weight:900; margin-bottom:20px;">
+                <span>TOTAL:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <button class="btn-buy" onclick="checkout()">COMPRAR AHORA</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const products = [
+        { id: 1, name: "Vestido Satén Noche", price: 45, cat: "vestidos", img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500", tag: "HOT" },
+        { id: 2, name: "Crop Top Rib", price: 18, cat: "tops", img: "https://images.unsplash.com/photo-1554568218-0f1715e72254?w=500", tag: "NUEVO" },
+        { id: 3, name: "Botín Piel Negro", price: 85, cat: "zapatos", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500", tag: "TOP" },
+        { id: 4, name: "Vestido Floral", price: 25, cat: "vestidos", img: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=500", tag: "TREND" },
+        { id: 5, name: "Trench Coat Beige", price: 120, cat: "abrigos", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500", tag: "LUJO" },
+        { id: 6, name: "Sandalia Tacón", price: 55, cat: "zapatos", img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=500", tag: "PARTY" },
+        { id: 7, name: "Top Corset", price: 28, cat: "tops", img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500", tag: "HOT" },
+        { id: 8, name: "Chaqueta Cuero", price: 95, cat: "abrigos", img: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500", tag: "ICONIC" }
+    ];
+
+    let cart = [];
+    let currentP = null;
+
+    // LÓGICA DE BIENVENIDA (SPLASH)
+    window.onload = () => {
+        setTimeout(() => {
+            document.getElementById('splash-screen').classList.add('hidden');
+            document.getElementById('main-content').classList.add('visible');
+        }, 2500); // 2.5 segundos de bienvenida
+        renderProducts();
+    };
+
+    function renderProducts(list = products) {
+        const grid = document.getElementById('product-grid');
+        grid.innerHTML = list.map(p => `
+            <div class="p-card" onclick="openDetail(${p.id})">
+                <div class="p-img-box">
+                    <span class="p-tag">${p.tag}</span>
+                    <img src="${p.img}">
+                </div>
+                <div class="p-info">
+                    <p class="p-name">${p.name}</p>
+                    <p class="p-price">$${p.price}.00</p>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function searchProducts() {
+        const term = document.getElementById('main-search').value.toLowerCase();
+        const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+        renderProducts(filtered);
+    }
+
+    function filterCat(cat) {
+        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active-cat'));
+        document.getElementById(`cat-${cat}`).classList.add('active-cat');
+        const filtered = cat === 'all' ? products : products.filter(p => p.cat === cat);
+        renderProducts(filtered);
+        showStore();
+    }
+
+    function openDetail(id) {
+        currentP = products.find(p => p.id === id);
+        document.getElementById('view-store').style.display = 'none';
+        document.getElementById('view-product').style.display = 'block';
+        document.getElementById('d-img').src = currentP.img;
+        document.getElementById('d-title').innerText = currentP.name;
+        document.getElementById('d-price').innerText = `$${currentP.price}.00`;
+        
+        const sizes = currentP.cat === 'zapatos' ? ['36','37','38','39'] : ['S','M','L','XL'];
+        document.getElementById('size-options').innerHTML = sizes.map(s => `
+            <div style="border:1px solid #ddd; padding:10px 15px; cursor:pointer;" onclick="selectSize(this)">${s}</div>
+        `).join('');
+        window.scrollTo(0,0);
+    }
+
+    function selectSize(el) {
+        document.querySelectorAll('#size-options div').forEach(d => {
+            d.style.background = 'white'; d.style.color = 'black';
+        });
+        el.style.background = 'black'; el.style.color = 'white';
+        el.classList.add('selected');
+    }
+
+    function addToCart() {
+        const size = document.querySelector('.selected');
+        if(!size) return alert("Elige tu talla");
+        cart.push({ ...currentP, size: size.innerText });
+        updateUI();
+        toggleCart();
+    }
+
+    function updateUI() {
+        const container = document.getElementById('cart-items');
+        container.innerHTML = cart.map((item, idx) => `
+            <div style="display:flex; gap:15px; margin-bottom:20px;">
+                <img src="${item.img}" style="width:50px; height:70px; object-fit:cover;">
+                <div style="flex-grow:1">
+                    <p style="font-size:12px; font-weight:bold;">${item.name}</p>
+                    <p style="font-size:11px; color:#999;">Talla: ${item.size}</p>
+                    <p style="font-weight:900;">$${item.price}.00</p>
+                </div>
+                <span onclick="removeItem(${idx})" style="cursor:pointer">✕</span>
+            </div>
+        `).join('');
+        const total = cart.reduce((s, i) => s + i.price, 0);
+        document.getElementById('cart-total').innerText = `$${total}.00`;
+        document.getElementById('cart-count').innerText = cart.length;
+    }
+
+    function removeItem(idx) { cart.splice(idx, 1); updateUI(); }
+    function toggleCart() { document.getElementById('cart-sidebar').classList.add('open'); document.getElementById('overlay').style.display = 'block'; }
+    function closeCart() { document.getElementById('cart-sidebar').classList.remove('open'); document.getElementById('overlay').style.display = 'none'; }
+    function showStore() { document.getElementById('view-store').style.display = 'block'; document.getElementById('view-product').style.display = 'none'; }
+    function checkout() {
+        let msg = "¡Hola ANFRA! Bienvenido al mundo Anfra. Este es mi pedido:\n\n";
+        cart.forEach(i => msg += `• ${i.name} (${i.size}) - $${i.price}\n`);
+        window.open(`https://wa.me/2646289600?text=${encodeURIComponent(msg)}`);
+    }
+</script>
+</body>
+</html>
