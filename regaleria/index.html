@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Puky Shop - Catálogo 🌸✨</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght=500;700&display=swap');
 
         :root {
             --pink-bright: #ff66aa;
@@ -75,12 +75,22 @@
             border: 3px solid white; font-family: 'Fredoka One'; cursor: pointer; box-shadow: 0 4px 0px #d64d8a; margin-bottom: 15px;
         }
 
+        /* --- BOTONES DE CANTIDAD SELECCIONABLE --- */
+        .quantity-selector { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+        .qty-btn {
+            background: white; border: 2px solid var(--pink-border); color: var(--pink-bright);
+            padding: 8px 15px; font-family: 'Fredoka One'; border-radius: 15px; cursor: pointer; transition: 0.2s;
+        }
+        .qty-btn.selected {
+            background: var(--pink-gloss); color: white; border-color: white; box-shadow: 0 3px 0px #d64d8a;
+        }
+
         .color-picker { display: flex; gap: 8px; margin: 10px 0; flex-wrap: wrap; }
         .color-circle { width: 30px; height: 30px; border-radius: 50%; border: 3px solid #fff; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .color-circle.selected { transform: scale(1.2); border-color: var(--pink-bright); }
 
         .total-box { background: var(--pink-soft); color: var(--pink-bright); padding: 10px; border-radius: 15px; font-size: 1.8rem; font-family: 'Fredoka One'; text-align: center; margin: 10px 0; }
-        input, textarea, select { width: 100%; padding: 10px; border-radius: 12px; border: 2px solid var(--pink-border); margin-bottom: 10px; box-sizing: border-box; font-family: 'Quicksand'; }
+        textarea { width: 100%; padding: 10px; border-radius: 12px; border: 2px solid var(--pink-border); margin-bottom: 10px; box-sizing: border-box; font-family: 'Quicksand'; }
 
         @media (max-width: 800px) { .main-container { flex-direction: column; } .profile-sidebar { width: 100%; } }
     </style>
@@ -99,7 +109,7 @@
 
     <div class="main-container">
         <aside class="profile-sidebar">
-            <img src="img/regaleria/puky.jpg" class="profile-pic" alt="Puky Logo">
+            <img src="puky.png" class="profile-pic" alt="Puky Logo">
             <h2 style="font-family: 'Fredoka One'; color: var(--pink-bright); margin: 5px 0;">Puky Shop 🐾</h2>
             <p style="font-size: 0.85rem; color: #666;">Córdoba, AR 🇦🇷<br>Detalles que emocionan.</p>
         </aside>
@@ -108,7 +118,7 @@
             <div id="home" class="section active">
                 <h2 style="font-family: 'Fredoka One'; color: var(--pink-bright);">Elige una categoría 🌸</h2>
                 <div class="worlds-grid">
-                    <div class="card" onclick="mostrarProductos('flores')"><img src="img/regaleria/flores/rosasflor3.jpg"><span>Flores 🌸</span></div>
+                    <div class="card" onclick="mostrarProductos('flores')"><img src="img/regaleria/flores/rosas de 7/Rosa.jpg"><span>Flores 🌸</span></div>
                     <div class="card" onclick="mostrarProductos('peluches')"><img src="img/regaleria/peluches/peluche1kuromy.jpg"><span>Peluches 🧸</span></div>
                     <div class="card" onclick="mostrarProductos('cajas')"><img src="img/regaleria/cajas/caja1.jpg"><span>Cajas 🎁</span></div>
                 </div>
@@ -128,12 +138,14 @@
                         <h2 id="final-titulo" style="font-family: 'Fredoka One'; color: var(--pink-bright); margin-top: 0;"></h2>
                         
                         <div id="seccion-color">
-                            <label><b>Color:</b> <span id="txt-color">Rosa</span></label>
+                            <label><b>Color disponible:</b> <span id="txt-color">Rosa</span></label>
                             <div class="color-picker" id="picker-colores"></div>
                         </div>
 
-                        <label><b>Cantidad:</b></label>
-                        <input type="number" id="cant" value="1" min="1" oninput="calcular()">
+                        <div id="seccion-cantidad">
+                            <label><b>Selecciona la cantidad:</b></label>
+                            <div class="quantity-selector" id="contenedor-botones-cant"></div>
+                        </div>
                         
                         <textarea id="nota" placeholder="¿Algún mensaje para la tarjeta?"></textarea>
                         
@@ -171,12 +183,16 @@
 
         const db = {
             flores: { 
-                p: 1800, 
                 items: [
-                    {n: "Rosa Eterna", img: "img/regaleria/flores/rosasflor3.jpg"},
-                    {n: "Margaritas", img: "img/regaleria/flores/margatiras1.jpg"},
-                    {n: "Tulipán", img: "img/regaleria/flores/flortulipan1.jpg"},
-                    {n: "Mariposas", img: "img/regaleria/flores/mariposas.jpg"}
+                    { 
+                        n: "Rosa Eterna", 
+                        isRosas: true,
+                        preciosPorCantidad: { 1: 1800, 7: 12000, 12: 20000, 20: 32000, 25: 39000, 30: 45000, 35: 50000 },
+                        cantidades: [1, 7, 12, 20, 25, 30, 35]
+                    },
+                    { n: "Margaritas", folder: "margaritas", pUnidad: 1800, cantidades: [1, 7, 12] },
+                    { n: "Tulipán", folder: "tulipan", pUnidad: 2000, cantidades: [1, 7, 12] },
+                    { n: "Mariposas", folder: "mariposas", pUnidad: 1500, cantidades: [1, 7, 12] }
                 ],
                 colores: [
                     {n: 'Rosa', c: '#ffb3d9'}, {n: 'Amarillo', c: '#ffeb3b'}, 
@@ -184,21 +200,18 @@
                 ]
             },
             peluches: { 
-                p: 6500, 
                 items: [
-                    {n: "Kuromi", img: "img/regaleria/peluches/peluche1kuromy.jpg"},
-                    {n: "Stitch", img: "img/regaleria/peluches/peluchestich.jpg"}
+                    {n: "Kuromi", img: "img/regaleria/peluches/peluche1kuromy.jpg", pUnidad: 6500, cantidades: [1, 2]}
                 ],
                 colores: [{n: 'Único', c: '#eee'}]
             },
             cajas: { 
-                p: 4000, 
-                items: [{n: "Caja Especial", img: "img/regaleria/cajas/caja1.jpg"}],
+                items: [{n: "Caja Especial", img: "img/regaleria/cajas/caja1.jpg", pUnidad: 4000, cantidades: [1]}],
                 colores: [{n: 'Rosa', c: '#ffb3d9'}, {n: 'Blanca', c: '#fff'}]
             }
         };
 
-        let catSel = "", modSel = "", colSel = "";
+        let catSel = "", modSel = "", colSel = "", cantSel = 1;
 
         function mostrarProductos(cat) {
             catSel = cat; 
@@ -206,10 +219,20 @@
             document.getElementById('titulo-categoria').innerText = cat.charAt(0).toUpperCase() + cat.slice(1);
             const g = document.getElementById('grid-productos'); 
             g.innerHTML = "";
+            
             db[cat].items.forEach(item => {
+                let imgPortada = item.img;
+                if (cat === 'flores') {
+                    if (item.isRosas) {
+                        imgPortada = "img/regaleria/flores/rosas de 7/Rosa.jpg";
+                    } else {
+                        imgPortada = `img/regaleria/flores/${item.folder}/Rosa.jpg`;
+                    }
+                }
+                
                 g.innerHTML += `
-                    <div class="card" onclick="irAConfig('${item.n}', '${item.img}')">
-                        <img src="${item.img}">
+                    <div class="card" onclick="irAConfig('${item.n}', '${imgPortada}')">
+                        <img src="${imgPortada}">
                         <span>${item.n}</span>
                     </div>`;
             });
@@ -219,8 +242,10 @@
             modSel = nombre; 
             volver('configurador');
             document.getElementById('final-titulo').innerText = nombre;
-            document.getElementById('final-img').src = img;
             
+            const productoActual = db[catSel].items.find(item => item.n === modSel);
+            cantSel = productoActual.cantidades[0];
+
             const p = document.getElementById('picker-colores');
             p.innerHTML = "";
             db[catSel].colores.forEach((color, i) => {
@@ -232,17 +257,62 @@
                     div.classList.add('selected');
                     colSel = color.n;
                     document.getElementById('txt-color').innerText = color.n;
+                    actualizarImagenYPrecio(); 
                 };
                 p.appendChild(div);
                 if(i === 0) colSel = color.n;
             });
             document.getElementById('txt-color').innerText = colSel;
-            calcular();
+
+            const contenedorCant = document.getElementById('contenedor-botones-cant');
+            contenedorCant.innerHTML = "";
+            productoActual.cantidades.forEach((cantidad, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'qty-btn' + (i === 0 ? ' selected' : '');
+                btn.innerText = quantity = cantidad;
+                btn.onclick = () => {
+                    document.querySelectorAll('.qty-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    cantSel = cantidad;
+                    actualizarImagenYPrecio();
+                };
+                contenedorCant.appendChild(btn);
+            });
+
+            actualizarImagenYPrecio();
         }
 
-        function calcular() {
-            const cant = document.getElementById('cant').value || 1;
-            const total = db[catSel].p * cant;
+        function actualizarImagenYPrecio() {
+            const productoActual = db[catSel].items.find(item => item.n === modSel);
+            let total = 0;
+
+            if (productoActual) {
+                if (catSel === 'flores') {
+                    let rutaCarpeta = "";
+
+                    if (productoActual.isRosas) {
+                        if (cantSel === 1)  rutaCarpeta = "individuales";
+                        else if (cantSel === 7)  rutaCarpeta = "rosas de 7";
+                        else if (cantSel === 12) rutaCarpeta = "rosas de 12";
+                        else if (cantSel === 20) rutaCarpeta = "rosas de 20";
+                        else if (cantSel === 25) rutaCarpeta = "rosas de 25";
+                        else if (cantSel === 30) rutaCarpeta = "rosas de 30";
+                        else if (cantSel === 35) rutaCarpeta = "rosas de 35";
+                        
+                        total = productoActual.preciosPorCantidad[cantSel] || 0;
+                    } else {
+                        rutaCarpeta = productoActual.folder;
+                        total = productoActual.pUnidad * cantSel;
+                    }
+
+                    document.getElementById('final-img').src = `img/regaleria/flores/${rutaCarpeta}/${colSel}.jpg`;
+
+                } else {
+                    document.getElementById('final-img').src = productoActual.img;
+                    total = productoActual.pUnidad * cantSel;
+                }
+            }
+
             document.getElementById('display-total').innerText = "$" + total.toLocaleString();
         }
 
@@ -252,9 +322,8 @@
         }
 
         function mandarPedido() {
-            const cant = document.getElementById('cant').value;
             const nota = document.getElementById('nota').value;
-            const msg = `¡Hola Puky! 🐾\nQuiero pedir: ${cant}x ${modSel}\nColor: ${colSel}\nNota: ${nota}\nTotal: ${document.getElementById('display-total').innerText}`;
+            const msg = `¡Hola Puky! 🐾\nQuiero pedir: ${cantSel}x ${modSel}\nColor: ${colSel}\nNota: ${nota}\nTotal: ${document.getElementById('display-total').innerText}`;
             window.open(`https://wa.me/5492646289600?text=${encodeURIComponent(msg)}`);
         }
     </script>

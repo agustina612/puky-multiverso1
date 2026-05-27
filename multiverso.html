@@ -17,14 +17,24 @@
 
         .multiverso-list { display: flex; flex-direction: column; gap: 25px; width: 90%; max-width: 800px; margin-bottom: 50px; }
 
+        /* Estilos generales para las tarjetas */
         .card-horizontal { display: flex; height: 180px; border-radius: 25px; overflow: hidden; border: 6px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.3s; text-decoration: none; background-color: white; }
-        .card-horizontal:hover { transform: translateY(-5px); border-color: #ff758c; }
+        
+        /* Solo la tarjeta activa (Puky) tendrá efectos de hover y cursor de click */
+        .card-horizontal.activa { cursor: pointer; }
+        .card-horizontal.activa:hover { transform: translateY(-5px); border-color: #ff758c; }
+
+        /* Estilo para las tarjetas inactivas (Próximamente) */
+        .card-horizontal.inactiva { cursor: default; opacity: 0.85; }
 
         .card-image-container { width: 45%; height: 100%; }
         .card-image-container img { width: 100%; height: 100%; object-fit: cover; }
 
-        .card-text-container { width: 55%; display: flex; align-items: center; justify-content: center; background-color: #ff758c; }
+        .card-text-container { width: 55%; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #ff758c; padding: 10px; }
         .card-label { color: white; font-family: 'Fredoka One', cursive; font-size: 2rem; letter-spacing: 2px; text-align: center; }
+        
+        /* Texto de Próximamente */
+        .badge-proximamente { color: #ffe3e8; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 1rem; margin-top: 5px; letter-spacing: 1px; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -32,6 +42,7 @@
     <nav class="main-nav">
         <a href="index.html">Inicio</a>
         <a href="multiverso.html" class="active">Multiverso</a>
+        <!-- Dejamos los enlaces del menú por si acaso, pero si querés que tampoco clickeen arriba, avisame -->
         <a href="ropa/index.html">Alfran</a>
         <a href="billuteria/index.html">Liluk</a>
         <a href="perfumes/index.html">Linfrank</a>
@@ -42,34 +53,41 @@
 
     <div class="multiverso-list">
         
-        <a href="ropa/index.html" class="card-horizontal">
+        <!-- ALFRAN (Inactivo) -->
+        <div class="card-horizontal inactiva">
             <div class="card-image-container">
                 <img src="alfran.jpg" alt="Alfran">
             </div>
             <div class="card-text-container">
                 <div class="card-label">ALFRAN</div>
+                <div class="badge-proximamente">Próximamente</div>
             </div>
-        </a>
+        </div>
 
-        <a href="perfumes/index.html" class="card-horizontal">
+        <!-- LINFRANK (Inactivo) -->
+        <div class="card-horizontal inactiva">
             <div class="card-image-container">
                 <img src="linfrank.png" alt="Linfrank">
             </div>
             <div class="card-text-container">
                 <div class="card-label">LINFRANK</div>
+                <div class="badge-proximamente">Próximamente</div>
             </div>
-        </a>
+        </div>
 
-        <a href="billuteria/index.html" class="card-horizontal">
+        <!-- LILUK (Inactivo) -->
+        <div class="card-horizontal inactiva">
             <div class="card-image-container">
                 <img src="liluk.png" alt="Liluk">
             </div>
             <div class="card-text-container">
                 <div class="card-label">LILUK</div>
+                <div class="badge-proximamente">Próximamente</div>
             </div>
-        </a>
+        </div>
 
-        <a href="regaleria/index.html" class="card-horizontal">
+        <!-- PUKY (Activo) -->
+        <a href="regaleria/index.html" class="card-horizontal activa">
             <div class="card-image-container">
                 <img src="pukyregaleria.jpg" alt="Puky">
             </div>
