@@ -3,341 +3,737 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linfrank | Esencias Esenciales</title>
+    <title>LINFRANK - Esencias Esenciales</title>
     <style>
-        /* --- ESTILOS GENERALES (Toque Árabe-Minimalista) --- */
         :root {
-            --dorado: #C5A059;
-            --crema: #FDFBF8;
-            --oscuro: #1A1A1A;
-            --acento: #8B0000;
+            --dorado: #b89752;
+            --oscuro: #111111;
+            --blanco: #ffffff;
+            --gris-claro: #f9f9f9;
+            --borde: #eaeaea;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            font-family: 'Crimson Text', serif;
-            margin: 0;
-            background-color: var(--crema);
+            background-color: var(--blanco);
             color: var(--oscuro);
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap');
-
-        h1, h2, h3 { font-family: 'Playfair Display', serif; }
-
+        /* --- HEADER --- */
         header {
-            background-color: #fff;
-            padding: 20px;
             text-align: center;
-            border-bottom: 3px solid var(--dorado);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--dorado);
+            background-color: var(--blanco);
+            position: relative;
+            z-index: 10;
         }
 
-        .logo {
+        header h1 {
             font-size: 2.5rem;
-            color: var(--dorado);
-            text-transform: uppercase;
             letter-spacing: 4px;
-            margin: 0;
+            color: var(--dorado);
+            font-family: 'Georgia', serif;
         }
 
-        .hero {
-            height: 70vh;
-            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                              url('https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=1600');
-            background-size: cover;
-            background-position: center;
+        header p {
+            font-style: italic;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* --- VISTAS Y TRANSICIÓN SUAVE --- */
+        .vista-seccion {
+            opacity: 1;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        .fade-out {
+            opacity: 0 !important;
+        }
+
+        .view-hidden {
+            display: none !important;
+        }
+
+        /* --- HERO BANNER INTRO --- */
+        .hero-slider-container {
+            position: relative;
+            height: 520px;
+            width: 100%;
+            overflow: hidden;
+            background-color: #222;
+        }
+
+        .slider-wrapper {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            text-align: center;
+            width: 100%;
+            height: 100%;
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
         }
 
-        .hero-content {
-            border: 2px solid var(--dorado);
-            padding: 40px;
-            background-color: rgba(0,0,0,0.5);
-            border-radius: 10px;
-        }
-
-        .hero h2 { font-size: 3rem; margin-bottom: 10px; }
-        .hero p { font-size: 1.2rem; margin-bottom: 20px; font-style: italic; }
-
-        .productos { padding: 50px 20px; text-align: center; }
-        
-        .productos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .producto-card {
-            background: #fff;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 20px;
-            transition: transform 0.3s, box-shadow 0.3s;
+        .slide {
+            min-width: 100%;
+            height: 100%;
             position: relative;
         }
 
-        .producto-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            border-color: var(--dorado);
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.5);
+            display: block;
         }
 
-        .producto-card img {
+        .hero-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid var(--dorado);
+            padding: 35px;
+            background-color: rgba(17, 17, 17, 0.85);
+            border-radius: 8px;
+            max-width: 550px;
+            width: 90%;
+            text-align: center;
+            color: var(--blanco);
+            z-index: 5;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .hero-box h2 {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            font-family: 'Georgia', serif;
+            letter-spacing: 2px;
+        }
+
+        .hero-box p {
+            font-style: italic;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            color: #e0e0e0;
+        }
+
+        .btn-explorar {
+            background-color: #1a1a1a;
+            color: var(--blanco);
+            border: 1px solid var(--dorado);
+            padding: 12px 30px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-explorar:hover {
+            background-color: var(--dorado);
+            color: var(--oscuro);
+        }
+
+        /* --- CONTAINER GENERAL --- */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            font-family: 'Georgia', serif;
+        }
+
+        /* --- GRID CATÁLOGO --- */
+        .grid-productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card-producto {
+            border: 1px solid var(--borde);
+            border-radius: 6px;
+            padding: 20px;
+            text-align: center;
+            background-color: var(--blanco);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card-producto:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .img-container {
             width: 100%;
-            height: 250px;
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+            background-color: #ffffff;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            border: 1px solid #f0f0f0;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
+            transition: transform 0.3s;
+        }
+
+        .card-producto:hover .img-container img {
+            transform: scale(1.05);
+        }
+
+        .card-producto h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-family: 'Georgia', serif;
+        }
+
+        .card-producto .desc-corta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+            height: 40px;
+        }
+
+        .card-producto .precio {
+            color: var(--dorado);
+            font-weight: bold;
+            font-size: 1.2rem;
             margin-bottom: 15px;
         }
 
-        .producto-card h3 { color: var(--oscuro); margin: 10px 0; font-size: 1.4rem;}
-        .producto-card .precio { color: var(--dorado); font-weight: bold; font-size: 1.3rem; margin-bottom: 15px; }
-
-        .btn {
-            background-color: var(--oscuro);
-            color: #fff;
-            border: none;
-            padding: 12px 24px;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
+        .btn-agregar {
+            width: 100%;
+            background-color: transparent;
+            color: var(--oscuro);
+            border: 1px solid var(--oscuro);
+            padding: 12px;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
             cursor: pointer;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
         }
 
-        .btn:hover { background-color: var(--dorado); }
-        .btn-add { background-color: #fff; color: var(--oscuro); border: 1px solid var(--oscuro); }
-        .btn-add:hover { background-color: var(--oscuro); color: #fff; }
+        .btn-agregar:hover {
+            background-color: var(--oscuro);
+            color: var(--blanco);
+        }
 
-        #carrito-sidebar {
+        /* --- VISTA DETALLES --- */
+        .btn-volver {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-volver:hover {
+            color: var(--oscuro);
+        }
+
+        .detalle-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            background: var(--blanco);
+            padding: 20px;
+        }
+
+        .galeria-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .foto-principal {
+            width: 100%;
+            height: 400px;
+            border: 1px solid var(--borde);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+        }
+
+        .foto-principal img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        /* --- CARRITO --- */
+        .carrito-flotante {
             position: fixed;
             top: 0;
             right: -400px;
-            width: 350px;
+            width: 380px;
             height: 100vh;
-            background: #fff;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.2);
-            z-index: 2000;
+            background-color: var(--blanco);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            z-index: 1000;
             transition: right 0.3s ease;
             display: flex;
             flex-direction: column;
-            border-left: 2px solid var(--dorado);
         }
 
-        #carrito-sidebar.active { right: 0; }
+        .carrito-flotante.open {
+            right: 0;
+        }
+
         .carrito-header {
             padding: 20px;
-            background: var(--crema);
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--borde);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .close-carrito { font-size: 1.5rem; cursor: pointer; color: var(--acento); }
-        #carrito-items { flex-grow: 1; padding: 20px; overflow-y: auto; }
-        .carrito-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
-        .carrito-footer { padding: 20px; border-top: 2px solid var(--dorado); background: var(--crema); }
-        .total-container { font-size: 1.2rem; font-weight: bold; display: flex; justify-content: space-between; margin-bottom: 20px; }
-        .btn-whatsapp { background-color: #25d366; color: #fff; width: 100%; padding: 15px; font-size: 1rem; font-weight: bold; }
-        .btn-whatsapp:hover { background-color: #1eb954; }
 
-        .cart-icon-float {
+        .btn-cerrar-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .carrito-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .item-carrito {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--borde);
+        }
+
+        .item-carrito img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .item-detalles {
+            flex: 1;
+        }
+
+        .item-detalles h4 {
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .item-detalles p {
+            color: var(--dorado);
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .btn-eliminar {
+            background: none;
+            border: none;
+            color: #cc0000;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .carrito-footer {
+            padding: 20px;
+            border-top: 1px solid var(--borde);
+            background-color: var(--gris-claro);
+        }
+
+        .total-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .total-line.final {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--oscuro);
+            margin-top: 5px;
+            border-top: 1px dashed #ccc;
+            padding-top: 5px;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            background-color: var(--oscuro);
+            color: var(--blanco);
+            border: none;
+            padding: 14px;
+            margin-top: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        .cart-trigger {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 25px;
+            right: 25px;
             background-color: var(--dorado);
-            color: #fff;
+            color: var(--blanco);
+            border: none;
             width: 60px;
             height: 60px;
             border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            font-weight: bold;
+            z-index: 999;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            z-index: 999;
+            font-size: 1.2rem;
         }
-        #cart-count { font-size: 1rem; margin-left: 5px; font-weight: bold;}
     </style>
 </head>
 <body>
 
-    <div class="cart-icon-float" onclick="toggleCarrito()">
-        🛒<span id="cart-count">0</span>
-    </div>
-
     <header>
-        <h1 class="logo">Linfrank</h1>
-        <p style="margin: 5px 0 0; font-style: italic; color: #666; font-size: 0.9rem;">Esencias Esenciales</p>
+        <h1>LINFRANK</h1>
+        <p>Esencias Esenciales</p>
     </header>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h2>Oud Real</h2>
-            <p>Místico, profundo y eterno. Una joya de oriente.</p>
-            <a href="#productos" class="btn">Explorar</a>
-        </div>
-    </section>
-
-    <section id="productos" class="productos">
-        <h2>Nuestra Colección</h2>
+    <div id="vista-catalogo" class="vista-seccion">
         
-        <div class="productos-grid">
+        <div class="hero-slider-container">
+            <div class="slider-wrapper" id="slider-de-portadas">
+                </div>
             
-            <div class="producto-card">
-                <img src="importados/diamante.jpg" alt="Diamante">
-                <h3>Jasmin del Desierto</h3>
-                <p>Ligero, floral y exótico.</p>
-                <p class="precio">$35.500</p>
-                <button class="btn btn-add" onclick="agregarAlCarrito('Jasmin del Desierto', 35500)">Agregar al Carrito</button>
+            <div class="hero-box">
+                <h2 id="slider-titulo">Cargando...</h2>
+                <p id="slider-descripcion">Descubre aromas memorables.</p>
+                <button class="btn-explorar" onclick="explorarDesdeSlider()">EXPLORAR</button>
             </div>
-
-            <div class="producto-card">
-                <img src="importados/piernas.jpg" alt="Piernas">
-                <h3>Oud Místico</h3>
-                <p>Amaderado, intenso y duradero.</p>
-                <p class="precio">$48.000</p>
-                <button class="btn btn-add" onclick="agregarAlCarrito('Oud Místico', 48000)">Agregar al Carrito</button>
-            </div>
-
-            <div class="producto-card">
-                <img src="importados/taco.jpg" alt="Taco">
-                <h3>Rosa Árabe</h3>
-                <p>Dulce, especiado y seductor.</p>
-                <p class="precio">$39.900</p>
-                <button class="btn btn-add" onclick="agregarAlCarrito('Rosa Árabe', 39900)">Agregar al Carrito</button>
-            </div>
-
-            <div class="producto-card">
-                <img src="importados1/arabe.jpg" alt="Arabe">
-                <h3>Ámbar Real</h3>
-                <p>Esencia pura de oriente.</p>
-                <p class="precio">$42.000</p>
-                <button class="btn btn-add" onclick="agregarAlCarrito('Ámbar Real', 42000)">Agregar al Carrito</button>
-            </div>
-
-            <div class="producto-card">
-                <img src="importados1/arabe2.jpg" alt="Arabe 2">
-                <h3>Noche en Dubai</h3>
-                <p>Enigmático y elegante.</p>
-                <p class="precio">$45.000</p>
-                <button class="btn btn-add" onclick="agregarAlCarrito('Noche en Dubai', 45000)">Agregar al Carrito</button>
-            </div>
-
-            <div class="producto-card">
-                <img src="importados1/arabe3.jpg" alt="Arabe 3">
-                <h3>Sándalo Sagrado</h3>
-                <p>Cálido y reconfortante.</p>
-                <p class="precio">$37.500</p>
-                <button class="btn btn-add" onclick="agregarAlCarrito('Sándalo Sagrado', 37500)">Agregar al Carrito</button>
-            </div>
-
         </div>
-    </section>
 
-    <div id="carrito-sidebar">
+        <div class="container">
+            <h2 class="section-title">Nuestra Colección</h2>
+            <div class="grid-productos" id="contenedor-productos">
+                </div>
+        </div>
+    </div>
+
+    <div id="vista-detalle" class="container vista-seccion view-hidden">
+        <button class="btn-volver" onclick="regresarAlCatalogoConTransicion()">← Volver al catálogo</button>
+        <div class="detalle-layout" id="contenedor-detalle-producto">
+            </div>
+    </div>
+
+    <button class="cart-trigger" onclick="toggleCarrito()">🛒 <span id="cart-count">0</span></button>
+
+    <div class="carrito-flotante" id="carrito-sidebar">
         <div class="carrito-header">
             <h3>Tu Carrito</h3>
-            <span class="close-carrito" onclick="toggleCarrito()">×</span>
+            <button class="btn-cerrar-cart" onclick="toggleCarrito()">×</button>
         </div>
-        <div id="carrito-items">
-            <p style="text-align:center; color:#999;">Tu carrito está vacío.</p>
-        </div>
+        <div class="carrito-items" id="carrito-items-list"></div>
         <div class="carrito-footer">
-            <div class="total-container">
-                <span>Total:</span>
-                <span id="carrito-total">$0</span>
+            <div id="contenedor-descuento"></div>
+            <div class="total-line">
+                <span>Subtotal:</span>
+                <span id="cart-subtotal">$0</span>
             </div>
-            <button class="btn btn-whatsapp" onclick="enviarPedidoWhatsApp()">
-                Finalizar Pedido por WhatsApp
-            </button>
+            <div class="total-line final">
+                <span>Total:</span>
+                <span id="cart-total">$0</span>
+            </div>
+            <button class="btn-checkout" onclick="alert('¡Procediendo a la compra!')">FINALIZAR COMPRA</button>
         </div>
     </div>
 
     <script>
+        // CONFIGURACIÓN CORREGIDA CON LOS MISMOS NOMBRES DE TU CARPETA
+// CONFIGURACIÓN CORREGIDA: Ahora apunta a la carpeta 'portada' que está al mismo nivel que tu index.html
+        const productos = [
+            {
+                id: 0,
+                nombre: "Mandarinsky",
+                descripcionCorta: "Notas cítricas vibrantes y frescas.",
+                descripcionLarga: "Una fragancia enérgica que combina la frescura de la mandarina pura.",
+                precio: 45000,
+                fotoPortada: "portada/mandarinskyportada.jpg"
+            },
+            {
+                id: 1,
+                nombre: "Millanel Cosmética",
+                descripcionCorta: "Elegancia clásica y versátil.",
+                descripcionLarga: "Una esencia equilibrada y distinguida.",
+                precio: 35500,
+                fotoPortada: "portada/MillanelCosméticaportada.jpg"
+            },
+            {
+                id: 2,
+                nombre: "Pacific Blue",
+                descripcionCorta: "Frescura oceánica e imponente.",
+                descripcionLarga: "Inspirado en la brisa del mar.",
+                precio: 48000,
+                fotoPortada: "portada/pacificblueportada.jpg"
+            },
+            {
+                id: 3,
+                nombre: "Philos Pura",
+                descripcionCorta: "Místico, sofisticado y envolvente.",
+                descripcionLarga: "Una combinación premium de notas cálidas.",
+                precio: 52000,
+                fotoPortada: "portada/philospuraportada.jpg"
+            },
+            {
+                id: 4,
+                nombre: "Ramses",
+                descripcionCorta: "Fuerza ancestral y carácter único.",
+                descripcionLarga: "Una fragancia intensa con un cuerpo imponente.",
+                precio: 48000,
+                fotoPortada: "portada/portada3.jpg"
+            },
+            {
+                id: 5,
+                nombre: "Club De Nuit",
+                descripcionCorta: "Intenso, audaz y nocturno.",
+                descripcionLarga: "Un perfume magnético con notas frutales y fondo ahumado.",
+                precio: 39900,
+                fotoPortada: "portada/portadaclubdenuit.jpg"
+            },
+            {
+                id: 6,
+                nombre: "Arfam",
+                descripcionCorta: "Una gran joya de perfumería oriental.",
+                descripcionLarga: "Esencia exótica de excelente fijación.",
+                precio: 46000,
+                fotoPortada: "portada/portada.jpg"
+            },
+            {
+                id: 7,
+                nombre: "Stallion",
+                descripcionCorta: "Destellos modernos, imponentes y mágicos.",
+                descripcionLarga: "Una fusión contemporánea sofisticada de larga duración.",
+                precio: 43000,
+                fotoPortada: "portada/portada2.jpg"
+            }
+        ];
+
         let carrito = [];
-        const telefono = "542646289600";
+        let currentSlideIndex = 0;
+
+        function inicializarTienda() {
+            const wrapper = document.getElementById('slider-de-portadas');
+            const contenedorCatalogo = document.getElementById('contenedor-productos');
+            
+            wrapper.innerHTML = '';
+            contenedorCatalogo.innerHTML = '';
+            
+            productos.forEach((prod) => {
+                // Generar Slides Superiores
+                const slideDiv = document.createElement('div');
+                slideDiv.className = 'slide';
+                
+                const imgSlide = new Image();
+                imgSlide.src = prod.fotoPortada;
+                imgSlide.alt = prod.nombre;
+                
+                slideDiv.appendChild(imgSlide);
+                wrapper.appendChild(slideDiv);
+
+                // Generar Catálogo Inferior
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'card-producto';
+                cardDiv.innerHTML = `
+                    <div class="img-container" onclick="verDetalleConTransicion(${prod.id})">
+                    </div>
+                    <h3>${prod.nombre}</h3>
+                    <p class="desc-corta">${prod.descripcionCorta}</p>
+                    <p class="precio">$${prod.precio.toLocaleString('es-AR')}</p>
+                    <button class="btn-agregar" onclick="agregarAlCarrito(${prod.id})">AGREGAR AL CARRITO</button>
+                `;
+                
+                const imgCard = new Image();
+                imgCard.src = prod.fotoPortada;
+                imgCard.alt = prod.nombre;
+                cardDiv.querySelector('.img-container').appendChild(imgCard);
+                
+                contenedorCatalogo.appendChild(cardDiv);
+            });
+
+            actualizarMovimientoSlider();
+            arrancarDesplazamientoAutomatico();
+        }
+
+        function actualizarMovimientoSlider() {
+            const wrapper = document.getElementById('slider-de-portadas');
+            wrapper.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+            
+            const prodActual = productos[currentSlideIndex];
+            document.getElementById('slider-titulo').innerText = prodActual.nombre;
+            document.getElementById('slider-descripcion').innerText = prodActual.descripcionCorta;
+        }
+
+        function arrancarDesplazamientoAutomatico() {
+            setInterval(() => {
+                currentSlideIndex++;
+                if (currentSlideIndex >= productos.length) {
+                    currentSlideIndex = 0;
+                }
+                actualizarMovimientoSlider();
+            }, 4000);
+        }
+
+        function explorarDesdeSlider() {
+            const perfumeActual = productos[currentSlideIndex];
+            verDetalleConTransicion(perfumeActual.id);
+        }
+
+        function verDetalleConTransicion(id) {
+            const catalogo = document.getElementById('vista-catalogo');
+            const detalle = document.getElementById('vista-detalle');
+
+            catalogo.classList.add('fade-out');
+
+            setTimeout(() => {
+                catalogo.classList.add('view-hidden');
+                inyectarContenidoDetalle(id);
+                
+                detalle.classList.remove('view-hidden');
+                detalle.classList.add('fade-out');
+                
+                window.scrollTo({top: 0});
+
+                setTimeout(() => {
+                    detalle.classList.remove('fade-out');
+                }, 50);
+
+            }, 400); 
+        }
+
+        function regresarAlCatalogoConTransicion() {
+            const catalogo = document.getElementById('vista-catalogo');
+            const detalle = document.getElementById('vista-detalle');
+
+            detalle.classList.add('fade-out');
+
+            setTimeout(() => {
+                detalle.classList.add('view-hidden');
+                catalogo.classList.remove('view-hidden');
+                catalogo.classList.add('fade-out');
+
+                setTimeout(() => {
+                    catalogo.classList.remove('fade-out');
+                }, 50);
+
+            }, 400);
+        }
+
+        function inyectarContenidoDetalle(id) {
+            const prod = productos.find(p => p.id === id);
+            if(!prod) return;
+
+            const contenedorDetalle = document.getElementById('contenedor-detalle-producto');
+            contenedorDetalle.innerHTML = `
+                <div class="galeria-container">
+                    <div class="foto-principal" id="espacio-foto-principal">
+                    </div>
+                </div>
+                <div class="info-detalle">
+                    <h2>${prod.nombre}</h2>
+                    <p class="precio-detalle">$${prod.precio.toLocaleString('es-AR')}</p>
+                    <p class="descripcion-larga">${prod.descripcionLarga}</p>
+                    <button class="btn-agregar" style="max-width: 300px;" onclick="agregarAlCarrito(${prod.id})">
+                        AGREGAR AL CARRITO
+                    </button>
+                </div>
+            `;
+
+            const imgDetalle = new Image();
+            imgDetalle.src = prod.fotoPortada;
+            imgDetalle.alt = prod.nombre;
+            document.getElementById('espacio-foto-principal').appendChild(imgDetalle);
+        }
 
         function toggleCarrito() {
-            document.getElementById('carrito-sidebar').classList.toggle('active');
+            document.getElementById('carrito-sidebar').classList.toggle('open');
         }
 
-        function agregarAlCarrito(nombre, precio) {
-            const itemExistente = carrito.find(item => item.nombre === nombre);
-            if (itemExistente) {
+        function agregarAlCarrito(id) {
+            const prod = productos.find(p => p.id === id);
+            const itemExistente = carrito.find(item => item.id === id);
+
+            if(itemExistente) {
                 itemExistente.cantidad++;
             } else {
-                carrito.push({ nombre: nombre, precio: precio, cantidad: 1 });
+                carrito.push({...prod, cantidad: 1});
             }
-            actualizarInterfaz();
+            actualizarCarrito();
+            document.getElementById('carrito-sidebar').classList.add('open');
         }
 
-        function eliminarDelCarrito(nombre) {
-            carrito = carrito.filter(item => item.nombre !== nombre);
-            actualizarInterfaz();
+        function eliminarDelCarrito(id) {
+            carrito = carrito.filter(item => item.id !== id);
+            actualizarCarrito();
         }
 
-        function actualizarInterfaz() {
-            const containerItems = document.getElementById('carrito-items');
-            const containerTotal = document.getElementById('carrito-total');
-            const containerCount = document.getElementById('cart-count');
-            containerItems.innerHTML = '';
-            
-            if (carrito.length === 0) {
-                containerItems.innerHTML = '<p style="text-align:center; color:#999;">Tu carrito está vacío.</p>';
-                containerTotal.innerText = '$0';
-                containerCount.innerText = '0';
-                return;
-            }
+        function actualizarCarrito() {
+            const contenedorLista = document.getElementById('carrito-items-list');
+            const cartCount = document.getElementById('cart-count');
+            const totalSubtotal = document.getElementById('cart-subtotal');
+            const totalFinal = document.getElementById('cart-total');
 
-            let total = 0;
-            let totalProductos = 0;
+            contenedorLista.innerHTML = '';
+            let subtotal = 0;
+            let totalItems = 0;
 
             carrito.forEach(item => {
-                total += item.precio * item.cantidad;
-                totalProductos += item.cantidad;
-                const itemHTML = `
-                    <div class="carrito-item">
-                        <div>
-                            <strong>${item.nombre}</strong><br>
-                            <span style="color:#666">${item.cantidad} x $${item.precio.toLocaleString('es-AR')}</span>
+                subtotal += item.precio * item.cantidad;
+                totalItems += item.cantidad;
+
+                contenedorLista.innerHTML += `
+                    <div class="item-carrito">
+                        <div class="item-detalles">
+                            <h4>${item.nombre}</h4>
+                            <p>${item.cantidad} x $${item.precio.toLocaleString('es-AR')}</p>
                         </div>
-                        <button style="background:none; border:none; color:var(--acento); cursor:pointer;" onclick="eliminarDelCarrito('${item.nombre}')">Eliminar</button>
+                        <button class="btn-eliminar" onclick="eliminarDelCarrito(${item.id})">Eliminar</button>
                     </div>
                 `;
-                containerItems.innerHTML += itemHTML;
             });
 
-            containerTotal.innerText = `$${total.toLocaleString('es-AR')}`;
-            containerCount.innerText = totalProductos;
+            cartCount.innerText = totalItems;
+            totalSubtotal.innerText = `$${subtotal.toLocaleString('es-AR')}`;
+            totalFinal.innerText = `$${subtotal.toLocaleString('es-AR')}`;
         }
 
-        function enviarPedidoWhatsApp() {
-            if (carrito.length === 0) {
-                alert("Tu carrito está vacío.");
-                return;
-            }
-            let mensaje = "¡Hola! Quisiera realizar el siguiente pedido a Linfrank:\n\n";
-            let total = 0;
-            carrito.forEach(item => {
-                const subtotal = item.precio * item.cantidad;
-                total += subtotal;
-                mensaje += `*- ${item.nombre}* (Cant: ${item.cantidad}) - $${subtotal.toLocaleString('es-AR')}\n`;
-            });
-            mensaje += `\n*TOTAL:* $${total.toLocaleString('es-AR')}\n`;
-            const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
-            window.open(url, '_blank');
-        }
+        window.onload = inicializarTienda;
     </script>
 </body>
 </html>
