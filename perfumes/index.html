@@ -4,736 +4,1614 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LINFRANK - Esencias Esenciales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
-        :root {
-            --dorado: #b89752;
-            --oscuro: #111111;
-            --blanco: #ffffff;
-            --gris-claro: #f9f9f9;
-            --borde: #eaeaea;
-        }
-
+        /* ========================================== */
+        /* ESTILOS GENERALES Y BASE                   */
+        /* ========================================== */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-sizing: border-box;
         }
-
         body {
-            background-color: var(--blanco);
-            color: var(--oscuro);
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            color: #111;
+            overflow-x: hidden;
         }
-
-        /* --- HEADER --- */
+        
+        /* HEADER / NAV BAR */
         header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #eaeaea;
+            padding: 15px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-top {
             text-align: center;
-            padding: 20px 0;
-            border-bottom: 2px solid var(--dorado);
-            background-color: var(--blanco);
-            position: relative;
-            z-index: 10;
+            margin-bottom: 15px;
         }
-
-        header h1 {
-            font-size: 2.5rem;
+        .header-top h1 {
+            font-family: 'Playfair Display', serif;
             letter-spacing: 4px;
-            color: var(--dorado);
-            font-family: 'Georgia', serif;
+            color: #bfa15f;
+            font-size: 28px;
+            text-transform: uppercase;
         }
-
-        header p {
+        .header-top p {
+            font-size: 11px;
             font-style: italic;
-            font-size: 0.9rem;
             color: #666;
-            margin-top: 5px;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        /* Contenedor invisible para equilibrar el espacio del menú centrado */
+        .nav-spacer {
+            width: 58px; 
+        }
+        nav {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #111;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #bfa15f;
+        }
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            font-size: 18px;
+            width: 58px;
+            justify-content: flex-end;
+        }
+        .nav-icons i {
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .nav-icons i:hover {
+            color: #bfa15f;
+        }
+        .icono-canasto-wrapper {
+            position: relative;
+        }
+        .contador-burbuja {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #bfa15f;
+            color: #fff;
+            font-size: 10px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
         }
 
-        /* --- VISTAS Y TRANSICIÓN SUAVE --- */
-        .vista-seccion {
-            opacity: 1;
-            transition: opacity 0.4s ease-in-out;
+        /* HERO SLIDER */
+        .hero-section {
+            height: 60vh;
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 1s ease-in-out;
+        }
+        .slider-content {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.65);
+            padding: 30px 50px;
+            border: 1px solid rgba(229, 193, 88, 0.4);
+            border-radius: 4px;
+            color: #fff;
+            max-width: 500px;
+            width: 90%;
+        }
+        .slider-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        .slider-content p {
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 300;
+            color: #ddd;
+        }
+        .btn-explorar {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 8px 25px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-explorar:hover {
+            background: #fff;
+            color: #111;
         }
 
-        .fade-out {
-            opacity: 0 !important;
+        /* SECCIÓN CATÁLOGO */
+        .catalogo-container {
+            padding: 60px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .seccion-titulo {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+        .tabs-filtrado {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            border-bottom: 2px solid #bfa15f;
+            color: #bfa15f;
+        }
+        .grid-productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .card-producto {
+            background: #fff;
+            border: 1px solid #f0f0f0;
+            padding: 20px;
+            text-align: center;
+            border-radius: 4px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card-producto:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .img-container {
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        .img-container img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            cursor: pointer;
+            transition: transform 0.5s;
+        }
+        .card-producto:hover .img-container img {
+            transform: scale(1.05);
+        }
+        .card-producto h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        .desc-corta {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 15px;
+            height: 36px;
+            overflow: hidden;
+        }
+        .precio {
+            font-size: 16px;
+            font-weight: bold;
+            color: #bfa15f;
+            margin-bottom: 15px;
+        }
+        .btn-dorado {
+            background: transparent;
+            border: 1px solid #bfa15f;
+            color: #bfa15f;
+            padding: 8px 15px;
+            font-size: 12px;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+        .btn-dorado:hover {
+            background: #bfa15f;
+            color: #fff;
         }
 
+        /* CLASE AUXILIAR PARA OCULTAR ELEMENTOS */
         .view-hidden {
             display: none !important;
         }
 
-        /* --- HERO BANNER INTRO --- */
-        .hero-slider-container {
-            position: relative;
-            height: 520px;
-            width: 100%;
-            overflow: hidden;
-            background-color: #222;
-        }
-
-        .slider-wrapper {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
-        }
-
-        .slide {
-            min-width: 100%;
-            height: 100%;
-            position: relative;
-        }
-
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.5);
-            display: block;
-        }
-
-        .hero-box {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 1px solid var(--dorado);
-            padding: 35px;
-            background-color: rgba(17, 17, 17, 0.85);
-            border-radius: 8px;
-            max-width: 550px;
-            width: 90%;
-            text-align: center;
-            color: var(--blanco);
-            z-index: 5;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .hero-box h2 {
-            font-size: 2.5rem;
-            margin-bottom: 12px;
-            font-family: 'Georgia', serif;
-            letter-spacing: 2px;
-        }
-
-        .hero-box p {
-            font-style: italic;
-            margin-bottom: 25px;
-            font-size: 1.1rem;
-            color: #e0e0e0;
-        }
-
-        .btn-explorar {
-            background-color: #1a1a1a;
-            color: var(--blanco);
-            border: 1px solid var(--dorado);
-            padding: 12px 30px;
-            cursor: pointer;
-            letter-spacing: 2px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .btn-explorar:hover {
-            background-color: var(--dorado);
-            color: var(--oscuro);
-        }
-
-        /* --- CONTAINER GENERAL --- */
-        .container {
+        /* ========================================== */
+        /* SECCIÓN DE MARCAS INTERNA                  */
+        /* ========================================== */
+        .seccion-marcas-interna {
+            padding: 60px 5%;
             max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .section-title {
+            margin: 0 auto;
             text-align: center;
-            font-size: 1.8rem;
-            margin-bottom: 30px;
-            font-family: 'Georgia', serif;
         }
-
-        /* --- GRID CATÁLOGO --- */
-        .grid-productos {
+        .seccion-marcas-interna h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 50px;
+            letter-spacing: 0.5px;
+        }
+        .marcas-grid-interna {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
         }
-
-        .card-producto {
-            border: 1px solid var(--borde);
-            border-radius: 6px;
-            padding: 20px;
-            text-align: center;
-            background-color: var(--blanco);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .card-producto:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-
-        .img-container {
-            width: 100%;
-            height: 280px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            overflow: hidden;
-            background-color: #ffffff;
+        .marca-card-interna {
+            background: #ffffff;
+            border: 1px solid #eaeaea;
             border-radius: 4px;
-            margin-bottom: 15px;
-            border: 1px solid #f0f0f0;
-        }
-
-        .img-container img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            transition: transform 0.3s;
-        }
-
-        .card-producto:hover .img-container img {
-            transform: scale(1.05);
-        }
-
-        .card-producto h3 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            font-family: 'Georgia', serif;
-        }
-
-        .card-producto .desc-corta {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 15px;
-            height: 40px;
-        }
-
-        .card-producto .precio {
-            color: var(--dorado);
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-        }
-
-        .btn-agregar {
-            width: 100%;
-            background-color: transparent;
-            color: var(--oscuro);
-            border: 1px solid var(--oscuro);
-            padding: 12px;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .btn-agregar:hover {
-            background-color: var(--oscuro);
-            color: var(--blanco);
-        }
-
-        /* --- VISTA DETALLES --- */
-        .btn-volver {
-            background: none;
-            border: none;
-            color: #666;
-            font-size: 0.9rem;
-            cursor: pointer;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .btn-volver:hover {
-            color: var(--oscuro);
-        }
-
-        .detalle-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            background: var(--blanco);
-            padding: 20px;
-        }
-
-        .galeria-container {
+            padding: 50px 24px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-        }
-
-        .foto-principal {
-            width: 100%;
-            height: 400px;
-            border: 1px solid var(--borde);
-            display: flex;
-            justify-content: center;
             align-items: center;
-            background-color: #ffffff;
+            justify-content: flex-start;
+            min-height: 240px;
+        }
+        .marca-card-interna h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #000000;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .marca-card-interna p {
+            font-size: 11px;
+            color: #777777;
+            line-height: 1.7;
+            font-weight: 400;
+            max-width: 190px;
+            margin: 0;
         }
 
-        .foto-principal img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
+        /* Responsivo para celulares y tablets */
+        @media (max-width: 992px) {
+            .marcas-grid-interna { grid-template-columns: repeat(2, 1fr); }
+            .nav-spacer { display: none; }
+            .nav-container { flex-direction: column; gap: 15px; }
+            .nav-icons { width: auto; justify-content: center; }
+        }
+        @media (max-width: 576px) {
+            .marcas-grid-interna { grid-template-columns: 1fr; }
+            nav ul { gap: 15px; }
         }
 
-        /* --- CARRITO --- */
-        .carrito-flotante {
+        /* INTERFAZ DEL CANASTO */
+        .panel-canasto {
             position: fixed;
             top: 0;
-            right: -400px;
-            width: 380px;
-            height: 100vh;
-            background-color: var(--blanco);
-            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-            z-index: 1000;
-            transition: right 0.3s ease;
+            right: -360px;
+            width: 360px;
+            height: 100%;
+            background: #111;
+            color: #fff;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+            z-index: 2000;
+            transition: right 0.4s ease-in-out;
             display: flex;
             flex-direction: column;
         }
-
-        .carrito-flotante.open {
+        .panel-canasto.canasto-abierto {
             right: 0;
         }
-
-        .carrito-header {
+        .canasto-header {
             padding: 20px;
-            border-bottom: 1px solid var(--borde);
+            border-bottom: 1px solid #333;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
-        .btn-cerrar-cart {
+        .canasto-header h3 {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            color: #e5c158;
+            font-size: 20px;
+        }
+        .btn-cerrar-canasto {
             background: none;
             border: none;
-            font-size: 1.5rem;
+            color: #fff;
+            font-size: 28px;
             cursor: pointer;
         }
-
-        .carrito-items {
+        .canasto-body {
             flex: 1;
             overflow-y: auto;
             padding: 20px;
         }
-
-        .item-carrito {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--borde);
+        .canasto-vacio {
+            text-align: center;
+            color: #888;
+            margin-top: 40px;
+            font-size: 14px;
         }
-
-        .item-carrito img {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-        }
-
-        .item-detalles {
-            flex: 1;
-        }
-
-        .item-detalles h4 {
-            font-size: 0.95rem;
-            margin-bottom: 4px;
-        }
-
-        .item-detalles p {
-            color: var(--dorado);
-            font-size: 0.85rem;
-            font-weight: bold;
-        }
-
-        .btn-eliminar {
-            background: none;
-            border: none;
-            color: #cc0000;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-
-        .carrito-footer {
+        .canasto-footer {
             padding: 20px;
-            border-top: 1px solid var(--borde);
-            background-color: var(--gris-claro);
+            border-top: 1px solid #333;
+            background: #161616;
         }
-
-        .total-line {
+        .canasto-total-wrapper {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 1rem;
-        }
-
-        .total-line.final {
-            font-size: 1.25rem;
+            font-size: 18px;
+            margin-bottom: 15px;
             font-weight: bold;
-            color: var(--oscuro);
-            margin-top: 5px;
-            border-top: 1px dashed #ccc;
-            padding-top: 5px;
         }
-
-        .btn-checkout {
+        .canasto-total-monto {
+            color: #e5c158;
+        }
+        .btn-enviar-pedido {
             width: 100%;
-            background-color: var(--oscuro);
-            color: var(--blanco);
+            background: #e5c158;
+            color: #111;
             border: none;
-            padding: 14px;
-            margin-top: 10px;
+            padding: 12px;
             font-weight: bold;
+            font-size: 14px;
             cursor: pointer;
-            letter-spacing: 1px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-enviar-pedido:hover {
+            background: #d4b047;
+        }
+        .canasto-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1999;
+            display: none;
+        }
+        .canasto-overlay.activo {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER / NAV BAR -->
+    <header>
+        <div class="header-top">
+            <h1>LINFRANK</h1>
+            <p>Esencias Esenciales</p>
+        </div>
+        <div class="nav-container">
+            <!-- Div espaciador para centrar perfectamente la barra de navegación -->
+            <div class="nav-spacer"></div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="irACatalogo()">Inicio</a></li>
+                    <li><a href="#" onclick="irACatalogo()">Colección</a></li>
+                    <li><a href="#" onclick="mostrarMarcas()">Marcas</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-icons">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <div class="icono-canasto-wrapper" onclick="toggleCanasto()">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <div id="contador-burbuja" class="contador-burbuja">0</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- CATÁLOGO PRINCIPAL DE PRODUCTOS -->
+    <main id="seccion-catalogo" class="catalogo-container">
+        <h2 class="seccion-titulo">Nuestro Catálogo</h2>
+        <div class="tabs-filtrado">
+            <button class="tab-btn active">Todos</button>
+            <button class="tab-btn">Importados</button>
+            <button class="tab-btn">Nacionales</button>
+        </div>
+        
+        <div class="grid-productos">
+            <div class="card-producto">
+                <div class="img-container">
+                    <img src="tu-imagen-aqui.jpg" alt="Perfume">
+                </div>
+                <h3>Mandarinsky</h3>
+                <p class="desc-corta">Rendimiento 'Bestia': Al ser un Eau de Parfum de Armaf...</p>
+                <p class="precio">$45000</p>
+                <button class="btn-dorado">Ver Detalle</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- SECCIÓN MARCAS (Oculta por defecto, aparece al hacer clic en 'Marcas') -->
+    <section id="seccion-marcas" class="seccion-marcas-interna view-hidden">
+        <h2>Marcas que nos acompañan</h2>
+        
+        <div class="marcas-grid-interna">
+            <div class="marca-card-interna">
+                <h3>ARMAF</h3>
+                <p>Alta perfumería árabe con una fijación y proyección de nivel internacional.</p>
+            </div>
+            <div class="marca-card-interna">
+                <h3>MILLANEL</h3>
+                <p>Fragancias clásicas, alternativas de alta calidad y versatilidad para el día a día.</p>
+            </div>
+            <div class="marca-card-interna">
+                <h3>AFNAN</h3>
+                <p>Elegancia, misticismo y opulencia en esencias esenciales de Medio Oriente.</p>
+            </div>
+            <div class="marca-card-interna">
+                <h3>XERJOFF</h3>
+                <p>Aromas nicho inspirados en la opulencia y el rendimiento atómico.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERFAZ DEL CANASTO LATERAL -->
+    <div id="canasto-overlay" class="canasto-overlay" onclick="toggleCanasto()"></div>
+    <div id="panel-canasto" class="panel-canasto">
+        <div class="canasto-header">
+            <h3>Tu Canasto</h3>
+            <button class="btn-cerrar-canasto" onclick="toggleCanasto()">&times;</button>
+        </div>
+        <div class="canasto-body">
+            <p class="canasto-vacio">Tu canasto está vacío</p>
+        </div>
+        <div class="canasto-footer">
+            <div class="canasto-total-wrapper">
+                <span>Total:</span>
+                <span class="canasto-total-monto">$0</span>
+            </div>
+            <button class="btn-enviar-pedido"><i class="fa-brands fa-whatsapp"></i> Enviar pedido</button>
+        </div>
+    </div>
+
+    <!-- CONTROLADORES JAVASCRIPT -->
+    <script>
+        // Alternar panel del carrito
+        function toggleCanasto() {
+            const panel = document.getElementById('panel-canasto');
+            const overlay = document.getElementById('canasto-overlay');
+            panel.classList.toggle('canasto-abierto');
+            overlay.classList.toggle('activo');
         }
 
-        .cart-trigger {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background-color: var(--dorado);
-            color: var(--blanco);
-            border: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+        // Mostrar sección de Marcas y ocultar catálogo/sliders
+        function mostrarMarcas() {
+            const catalogo = document.getElementById('seccion-catalogo');
+            if (catalogo) catalogo.classList.add('view-hidden');
+            
+            const hero = document.querySelector('.hero-section');
+            if (hero) hero.classList.add('view-hidden');
+            
+            document.getElementById('seccion-marcas').classList.remove('view-hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Volver al Catálogo principal
+        function irACatalogo() {
+            const catalogo = document.getElementById('seccion-catalogo');
+            if (catalogo) catalogo.classList.remove('view-hidden');
+            
+            const hero = document.querySelector('.hero-section');
+            if (hero) hero.classList.remove('view-hidden');
+            
+            document.getElementById('seccion-marcas').classList.add('view-hidden');
+        }
+    </script>
+</body>
+</html>
+    <style>
+        /* ========================================== */
+        /* ESTILOS GENERALES Y BASE                   */
+        /* ========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            color: #111;
+            overflow-x: hidden;
+        }
+        
+        /* HEADER / NAV BAR */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #eaeaea;
+            padding: 15px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-top {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .header-top h1 {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 4px;
+            color: #bfa15f;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+        .header-top p {
+            font-size: 11px;
+            font-style: italic;
+            color: #666;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #111;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #bfa15f;
+        }
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            font-size: 18px;
+        }
+        .nav-icons i {
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: color 0.3s;
+        }
+        .nav-icons i:hover {
+            color: #bfa15f;
+        }
+        .icono-canasto-wrapper {
+            position: relative;
+        }
+        .contador-burbuja {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #bfa15f;
+            color: #fff;
+            font-size: 10px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-weight: bold;
-            z-index: 999;
+        }
+
+        /* HERO SLIDER */
+        .hero-section {
+            height: 60vh;
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            transition: transform 1s ease-in-out;
+        }
+        .slider-content {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.65);
+            padding: 30px 50px;
+            border: 1px solid rgba(229, 193, 88, 0.4);
+            border-radius: 4px;
+            color: #fff;
+            max-width: 500px;
+            width: 90%;
+        }
+        .slider-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        .slider-content p {
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 300;
+            color: #ddd;
+        }
+        .btn-explorar {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 8px 25px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-explorar:hover {
+            background: #fff;
+            color: #111;
+        }
+
+        /* SECCIÓN CATÁLOGO */
+        .catalogo-container {
+            padding: 60px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .seccion-titulo {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+        .tabs-filtrado {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            border-bottom: 2px solid #bfa15f;
+            color: #bfa15f;
+        }
+        .grid-productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .card-producto {
+            background: #fff;
+            border: 1px solid #f0f0f0;
+            padding: 20px;
+            text-align: center;
+            border-radius: 4px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card-producto:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .img-container {
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        .img-container img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            cursor: pointer;
+            transition: transform 0.5s;
+        }
+        .card-producto:hover .img-container img {
+            transform: scale(1.05);
+        }
+        .card-producto h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        .desc-corta {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 15px;
+            height: 36px;
+            overflow: hidden;
+        }
+        .precio {
+            font-size: 16px;
+            font-weight: bold;
+            color: #bfa15f;
+            margin-bottom: 15px;
+        }
+        .btn-dorado {
+            background: transparent;
+            border: 1px solid #bfa15f;
+            color: #bfa15f;
+            padding: 8px 15px;
+            font-size: 12px;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+        .btn-dorado:hover {
+            background: #bfa15f;
+            color: #fff;
+        }
+
+        /* VISTA DETALLE COMPLETO (Se acopla a tus capturas) */
+        .view-hidden {
+            display: none !important;
+        }
+        .detalle-container {
+            padding: 60px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .detalle-principal {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            .detalle-principal { grid-template-columns: 1fr; gap: 30px; }
+        }
+        .detalle-izq {
+            background: #fdfdfd;
+            border: 1px solid #f0f0f0;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+        }
+        .detalle-izq img {
+            max-width: 100%;
+            max-height: 450px;
+            object-fit: contain;
+        }
+        .detalle-der {
+            padding: 10px 0;
+        }
+        .detalle-der h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        .precio-detalle {
+            font-size: 26px;
+            font-weight: bold;
+            color: #bfa15f;
+            margin-bottom: 20px;
+        }
+        .desc-larga {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 30px;
+            white-space: pre-line;
+        }
+        .seccion-fotos-extras {
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .seccion-fotos-extras h4 {
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .galeria-extras {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .galeria-extras img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: opacity 0.3s;
+        }
+        .galeria-extras img:hover {
+            opacity: 0.7;
+        }
+
+        /* CUENTA REGRESIVA */
+        .reloj-container {
+            background: #111;
+            color: #fff;
+            padding: 40px 5%;
+            text-align: center;
+        }
+        .reloj-container h4 {
+            font-family: 'Playfair Display', serif;
+            color: #e5c158;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+        .reloj-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .reloj-bloque {
+            background: #222;
+            padding: 15px;
+            min-width: 70px;
+            border-radius: 4px;
+            border: 1px solid #333;
+        }
+        .reloj-bloque span {
+            display: block;
+            font-size: 24px;
+            font-weight: bold;
+            color: #e5c158;
+        }
+        .reloj-bloque label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #888;
+        }
+
+        /* ========================================== */
+        /* INTERFAZ DEL CANASTO (CARRITO LATERAL)     */
+        /* ========================================== */
+        .panel-canasto {
+            position: fixed;
+            top: 0;
+            right: -360px;
+            width: 360px;
+            height: 100%;
+            background: #111;
+            color: #fff;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+            z-index: 2000;
+            transition: right 0.4s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }
+        .panel-canasto.canasto-abierto {
+            right: 0;
+        }
+        .canasto-header {
+            padding: 20px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .canasto-header h3 {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            color: #e5c158;
+            font-size: 20px;
+        }
+        .btn-cerrar-canasto {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 28px;
+            cursor: pointer;
+        }
+        .canasto-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .canasto-vacio {
+            text-align: center;
+            color: #888;
+            margin-top: 40px;
+            font-size: 14px;
+        }
+        .item-canasto {
+            display: flex;
+            gap: 15px;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #222;
+            align-items: center;
+        }
+        .item-canasto img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #333;
+        }
+        .item-canasto-info {
+            flex: 1;
+        }
+        .item-canasto-info h5 {
+            margin: 0 0 5px 0;
+            font-size: 14px;
+            text-transform: capitalize;
+        }
+        .item-canasto-precio {
+            color: #e5c158;
+            margin: 0 0 8px 0;
+            font-weight: bold;
+            font-size: 13px;
+        }
+        .item-canasto-controles {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .item-canasto-controles button {
+            background: #222;
+            border: 1px solid #444;
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .item-canasto-controles button:hover {
+            background: #e5c158;
+            color: #111;
+        }
+        .canasto-footer {
+            padding: 20px;
+            border-top: 1px solid #333;
+            background: #161616;
+        }
+        .canasto-total-wrapper {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .canasto-total-monto {
+            color: #e5c158;
+        }
+        .btn-enviar-pedido {
+            width: 100%;
+            background: #e5c158;
+            color: #111;
+            border: none;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-enviar-pedido:hover {
+            background: #d4b047;
+        }
+        .canasto-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1999;
+            display: none;
+        }
+        .canasto-overlay.activo {
+            display: block;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>LINFRANK</h1>
-        <p>Esencias Esenciales</p>
+        <div class="header-top">
+            <h1>Linfrank</h1>
+            <p>Esencias Esenciales</p>
+        </div>
+        <div class="nav-container">
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="irACatalogo()">Inicio</a></li>
+                    <li><a href="#" onclick="irACatalogo()">Colección</a></li>
+                    <li><a href="#" onclick="irACatalogo()">Marcas</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="nav-icons">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <i class="fa-solid fa-heart"></i>
+                <div class="icono-canasto-wrapper" onclick="abrirCanasto()">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <div id="contador-canasto" class="contador-burbuja">0</div>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <div id="vista-catalogo" class="vista-seccion">
-        
-        <div class="hero-slider-container">
-            <div class="slider-wrapper" id="slider-de-portadas">
-                </div>
+    <main id="seccion-principal">
+        <section id="hero-slider" class="hero-section">
+            <div class="slider-content">
+                <h2 id="slider-titulo">Mandarinsky</h2>
+                <p id="slider-desc">Notas cítricas vibrantes y frescas.</p>
+                <button id="slider-btn" class="btn-explorar" onclick="verDetalle(0)">Explorar</button>
+            </div>
+        </section>
+
+        <section class="catalogo-container">
+            <h2 class="seccion-titulo">Nuestras Fragancias</h2>
             
-            <div class="hero-box">
-                <h2 id="slider-titulo">Cargando...</h2>
-                <p id="slider-descripcion">Descubre aromas memorables.</p>
-                <button class="btn-explorar" onclick="explorarDesdeSlider()">EXPLORAR</button>
+            <div class="tabs-filtrado">
+                <button class="tab-btn active" onclick="filtrarProductos('todos', this)">Todos</button>
+                <button class="tab-btn" onclick="filtrarProductos('citrico', this)">Cítricos</button>
+                <button class="tab-btn" onclick="filtrarProductos('dulce', this)">Dulces</button>
+                <button class="tab-btn" onclick="filtrarProductos('amaderado', this)">Amaderados</button>
             </div>
-        </div>
 
-        <div class="container">
-            <h2 class="section-title">Nuestra Colección</h2>
-            <div class="grid-productos" id="contenedor-productos">
+            <div id="contenedor-productos" class="grid-productos">
+                </div>
+        </section>
+<!-- ========================================== -->
+        <!-- SECCIÓN: MARCAS QUE MANEJAMOS              -->
+        <!-- ========================================== -->
+        <section id="seccion-marcas" class="marcas-container">
+            <h2 class="seccion-titulo">Marcas Destacadas</h2>
+            <p class="seccion-subtitulo">Trabajamos con las mejores casas perfumistas del mercado internacional y alternativo.</p>
+            
+            <div class="marcas-grid">
+                <div class="marca-card">
+                    <h3>ARMAF</h3>
+                    <p>Alta perfumería de diseñador con esencias intensas, duraderas y de proyección extrema. Creadores de la famosa línea Club de Nuit.</p>
+                </div>
+                <div class="marca-card">
+                    <h3>AFNAN</h3>
+                    <p>Casas árabes de lujo que combinan la tradición mística de oriente con la frescura y elegancia occidental moderna.</p>
+                </div>
+                <div class="marca-card">
+                    <h3>XERJOFF</h3>
+                    <p>Inspiraciones de nicho premium para quienes buscan opulencia, distinción y un rendimiento atómico en la piel.</p>
+                </div>
+                <div class="marca-card">
+                    <h3>MILLANEL</h3>
+                    <p>Fragancias versátiles, alternativas de alta calidad y excelente relación costo-beneficio para el uso diario y profesional.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN: CONTACTO                          -->
+        <!-- ========================================== -->
+        <section id="seccion-contacto" class="contacto-container">
+            <h2 class="seccion-titulo">Contacto</h2>
+            
+            <div class="contacto-wrapper">
+                <!-- Información de contacto -->
+                <div class="contacto-info">
+                    <h3>¿Tenés alguna duda?</h3>
+                    <p>Escribinos o visítanos para asesorarte con tu fragancia ideal. Hacemos envíos y entregas a coordinar.</p>
+                    
+                    <div class="info-linea">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>+54 9 264 628-9600</span>
+                    </div>
+                                        <div class="info-linea">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>+54 9 2646 28-1609</span>
+                    </div>
+                                        </div>
+                                        <div class="info-linea">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>+54 9 2644 39-8851</span>
+                    </div>
+                    <div class="info-linea">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>contacto@linfrank.com</span>
+                    </div>
+                    <div class="info-linea">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Córdoba Centro, Argentina</span>
+                    </div>
+                    
+                    <div class="contacto-redes">
+                        <a href="https://wa.me/5492646289600" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <!-- Formulario básico que conecta a WhatsApp -->
+                <div class="contacto-formulario">
+                    <h3>Dejanos tu Mensaje</h3>
+                    <div class="form-grupo">
+                        <input type="text" id="form-nombre" placeholder="Tu Nombre" required>
+                    </div>
+                    <div class="form-grupo">
+                        <textarea id="form-mensaje" rows="4" placeholder="¿En qué te podemos ayudar?" required></textarea>
+                    </div>
+                    <button class="btn-enviar-formulario" onclick="enviarConsultaFormulario()">
+                        Enviar Consulta <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+        <section class="reloj-container">
+            <h4>Oferta por Tiempo Limitado</h4>
+            <div class="reloj-grid">
+                <div class="reloj-bloque"><span id="dias">00</span><label>Días</label></div>
+                <div class="reloj-bloque"><span id="horas">00</span><label>Horas</label></div>
+                <div class="reloj-bloque"><span id="minutos">00</span><label>Min</label></div>
+                <div class="reloj-bloque"><span id="segundos">00</span><label>Seg</label></div>
+            </div>
+        </section>
+    </main>
+
+    <section id="vista-detail-wrapper">
+        <div id="vista-detalle" class="detalle-container view-hidden">
+            <div id="contenedor-detalle-dinamico">
                 </div>
         </div>
-    </div>
+    </section>
 
-    <div id="vista-detalle" class="container vista-seccion view-hidden">
-        <button class="btn-volver" onclick="regresarAlCatalogoConTransicion()">← Volver al catálogo</button>
-        <div class="detalle-layout" id="contenedor-detalle-producto">
-            </div>
-    </div>
-
-    <button class="cart-trigger" onclick="toggleCarrito()">🛒 <span id="cart-count">0</span></button>
-
-    <div class="carrito-flotante" id="carrito-sidebar">
-        <div class="carrito-header">
-            <h3>Tu Carrito</h3>
-            <button class="btn-cerrar-cart" onclick="toggleCarrito()">×</button>
+    <div id="panel-canasto" class="panel-canasto">
+        <div class="canasto-header">
+            <h3><i class="fa-solid fa-basket-shopping"></i> Mi Canasto</h3>
+            <button class="btn-cerrar-canasto" onclick="cerrarCanasto()">&times;</button>
         </div>
-        <div class="carrito-items" id="carrito-items-list"></div>
-        <div class="carrito-footer">
-            <div id="contenedor-descuento"></div>
-            <div class="total-line">
-                <span>Subtotal:</span>
-                <span id="cart-subtotal">$0</span>
-            </div>
-            <div class="total-line final">
+        
+        <div id="canasto-items" class="canasto-body">
+            <p class="canasto-vacio">Tu canasto está vacío.</p>
+        </div>
+        
+        <div class="canasto-footer">
+            <div class="canasto-total-wrapper">
                 <span>Total:</span>
-                <span id="cart-total">$0</span>
+                <span id="canasto-total" class="canasto-total-monto">$0</span>
             </div>
-            <button class="btn-checkout" onclick="alert('¡Procediendo a la compra!')">FINALIZAR COMPRA</button>
+            <button class="btn-enviar-pedido" onclick="enviarAWhatsApp()">
+                <i class="fa-brands fa-whatsapp"></i> Enviar Pedido por WhatsApp
+            </button>
         </div>
     </div>
-
+    <div id="canasto-overlay" class="canasto-overlay" onclick="cerrarCanasto()"></div>
     <script>
-        // CONFIGURACIÓN CORREGIDA CON LOS MISMOS NOMBRES DE TU CARPETA
-// CONFIGURACIÓN CORREGIDA: Ahora apunta a la carpeta 'portada' que está al mismo nivel que tu index.html
+        // 1. BASE DE DATOS DEL CATÁLOGO 
         const productos = [
             {
                 id: 0,
                 nombre: "Mandarinsky",
+                categoria: "citrico",
                 descripcionCorta: "Notas cítricas vibrantes y frescas.",
-                descripcionLarga: "Una fragancia enérgica que combina la frescura de la mandarina pura.",
+                descripcionLarga: `Rendimiento "Bestia": Al ser un Eau de Parfum de Armaf, su duración es excelente (pasa las 8 horas en piel tranquilamente) y proyecta con mucha fuerza durante las primeras horas.\n\nMomento ideal: Es un perfume principalmente nocturno y para climas frescos (otoño, invierno o noches frescas de primavera). Al ser tan dulce y llamativo, es ideal para salidas, boliches, citas o eventos donde quieras destacar y recibir cumplidos, ya que en el aire deja una estela súper activa.`,
                 precio: 45000,
-                fotoPortada: "portada/mandarinskyportada.jpg"
+                imagenes: ["portada/mandarinskyportada.jpg"],
+                fotosExtras: ["arabeoriginal/mandarinsky1/mandarinsky1.jpg"]
             },
             {
                 id: 1,
                 nombre: "Millanel Cosmética",
+                categoria: "dulce",
                 descripcionCorta: "Elegancia clásica y versátil.",
-                descripcionLarga: "Una esencia equilibrada y distinguida.",
+                descripcionLarga: `Esta combinación de elementos (vainilla, flores blancas y ámbar) es la firma clásica de los perfumes de la familia Oriental Floral o Ámbar Vainilla.\n\nSi estas notas corresponden al contenido real de los frascos, es muy probable que se trate de contratipos de perfumes importados tirando a dulces, cálidos, sensuales y un toque nocturnos.\n\nDe todas formas, el "misterio" técnico del envase sigue siendo el mismo: para saber con el 100% de certeza cuál es cuál, la clave sigue estando oculta en el sticker chiquito con el número que traen pegado en la base de vidrio (abajo) o en la tapa.`,
                 precio: 35500,
-                fotoPortada: "portada/MillanelCosméticaportada.jpg"
+                imagenes: ["portada/MillanelCosméticaportada.jpg"],
+                fotosExtras: ["arabeoriginal/MillanelCosmética1/MillanelCosmética1.jpg"]
             },
             {
                 id: 2,
                 nombre: "Pacific Blue",
+                categoria: "citrico",
                 descripcionCorta: "Frescura oceánica e imponente.",
-                descripcionLarga: "Inspirado en la brisa del mar.",
-                precio: 48000,
-                fotoPortada: "portada/pacificblueportada.jpg"
+                descripcionLarga: `Al ser un aroma tan cristalino, fresco y cítrico, es el perfume ideal para usar durante las mañanas y tardes de primavera y verano, o para esos momentos en los que querés una sensación prolongada de recién salir de la ducha con una elegancia muy relajada.`,
+                precio: 40000,
+                imagenes: ["portada/pacificblueportada.jpg"],
+                fotosExtras: ["arabeoriginal/pacificblue1/pacificblue1.jpg"]
             },
             {
                 id: 3,
                 nombre: "Philos Pura",
-                descripcionCorta: "Místico, sofisticado y envolvente.",
-                descripcionLarga: "Una combinación premium de notas cálidas.",
-                precio: 52000,
-                fotoPortada: "portada/philospuraportada.jpg"
+                categoria: "dulce",
+                descripcionCorta: "Dulce, frutal y memorable.",
+                descripcionLarga: `Es un aroma con una personalidad tremenda, ideal para quienes aman los perfumes dulces que se hacen notar. Tiene una proyección y una duración excelentes.\n\nAunque sus notas son frutales y tropicales, su fondo dulce y denso de vainilla hace que funcione increíblemente bien tanto en tardes de verano como en noches frescas o salidas donde quieras dejar una estela memorable.`,
+                precio: 43000, 
+                imagenes: ["portada/philospuraportada.jpg"],
+                fotosExtras: ["arabeoriginal/philospura1/philospura1.jpg"]
             },
             {
                 id: 4,
-                nombre: "Ramses",
-                descripcionCorta: "Fuerza ancestral y carácter único.",
-                descripcionLarga: "Una fragancia intensa con un cuerpo imponente.",
-                precio: 48000,
-                fotoPortada: "portada/portada3.jpg"
+                nombre: "Stallion 53",
+                categoria: "amaderado",
+                descripcionCorta: "Fragancia unisex, seca y amaderada.",
+                descripcionLarga: `Estilo: Es una fragancia 100% unisex. No es el típico perfume dulce o puramente floral; va hacia lo seco, verde y amaderado. Al principio puede chocar un poco si se está acostumbrado a aromas tradicionales, pero en la piel se asienta de manera sumamente elegante, sofisticada y con mucha personalidad.\n\nRendimiento: Al ser un Eau de Parfum, tiene muy buena fijación en piel y una estela que se hace notar sin llegar a ser empalagosa.`,
+                precio: 46000,
+                imagenes: ["portada/stallion1.jpg"],
+                fotosExtras: ["arabeoriginal/stallion1/stallion1.jpg"]
             },
             {
                 id: 5,
-                nombre: "Club De Nuit",
-                descripcionCorta: "Intenso, audaz y nocturno.",
-                descripcionLarga: "Un perfume magnético con notas frutales y fondo ahumado.",
-                precio: 39900,
-                fotoPortada: "portada/portadaclubdenuit.jpg"
+                nombre: "Silver",
+                categoria: "citrico",
+                descripcionCorta: "Versátil, pulcro y elegante.",
+                descripcionLarga: `Estilo: Es un perfume súper versátil, pulcro y elegante. Aunque dice "For Men", el ADN del original de Creed es bastante unisex y muy disfrutable para cualquiera que busque un olor a limpio.\n\nCuándo usarlo: Al ser una fragancia tan fresca y cristalina, brilla de manera espectacular en días cálidos, mañanas de primavera o verano, y es ideal para el uso diario porque resulta sumamente agradable.`,
+                precio: 41500,
+                imagenes: ["portada/silver1.jpg"],
+                fotosExtras: ["arabeoriginal/silver1/silver1.jpg"]
             },
             {
                 id: 6,
-                nombre: "Arfam",
-                descripcionCorta: "Una gran joya de perfumería oriental.",
-                descripcionLarga: "Esencia exótica de excelente fijación.",
-                precio: 46000,
-                fotoPortada: "portada/portada.jpg"
+                nombre: "Ramses",
+                categoria: "amaderado",
+                descripcionCorta: "Denso, amaderado y otoñal.",
+                descripcionLarga: `Estilo: Evoca una elegancia clásica pero moderna. No es el típico perfume dulce, nocturno o netamente cítrico e informal; huele a "jabón de lujo", a pulcritud absoluta y distinción.\n\nRendimiento y Ocasiones: Al ser de una casa árabe como Afnan, ofrece una excelente fijación y duración en piel. Es sumamente versátil, ideal para usar durante el día en entornos profesionales.`,
+                precio: 45000,
+                imagenes: ["perfumes/portadafaraon1.jpg"],
+                fotosExtras: ["arabeoriginal/ramses1/ramses1.jpg", "arabeoriginal/ramses1/ramses2.jpg"]
             },
             {
                 id: 7,
-                nombre: "Stallion",
-                descripcionCorta: "Destellos modernos, imponentes y mágicos.",
-                descripcionLarga: "Una fusión contemporánea sofisticada de larga duración.",
-                precio: 43000,
-                fotoPortada: "portada/portada2.jpg"
+                nombre: "Club de Nuit",
+                categoria: "citrico",
+                descripcionCorta: "Máquina de cumplidos, potencia bestial.",
+                descripcionLarga: `Efecto "Cumplidos": Si por algo es famoso este perfume de Armaf, es por ser una máquina de generar cumplidos. Su estela en el aire resulta sumamente atractiva para quienes están alrededor.\n\nPotencia y Duración: Tiene un rendimiento bestial. Dura muchísimas horas en piel (fácilmente pasa las 8-10 horas) y proyecta con mucha fuerza.\n\nVersatilidad: Es un comodín absoluto. Va perfecto para salir de noche, para eventos formales, citas o incluso para el uso diario.`,
+                precio: 45000,
+                imagenes: ["portada/portadaclubdenult.jpg"],
+                fotosExtras: ["arabeoriginal/clubdenuit1/clubdenult1.jpg"]
+            },
+            {
+                id: 8,
+                nombre: "Erba Pura",
+                categoria: "dulce",
+                descripcionCorta: "Rendimiento atómico y opulento.",
+                descripcionLarga: `Rendimiento Atómico: Los perfumes de Xerjoff son conocidos por su calidad extrema. Erba Pura tiene una duración bestial (fácilmente pasa las 12 horas en piel) y una proyección pesada.\n\nCuándo usarlo: Es un aroma tan versátil como opulento. Brilla de forma espectacular en climas templados, tardes de verano o noches de fiesta y salidas formales.`,
+                precio: 45000,
+                imagenes: ["portada/erbapura.jpg"],
+                fotosExtras: ["arabeoriginal/erbapura1/erbapura1.jpg"]
+            },
+            {
+                id: 9,
+                nombre: "Odyssey",
+                categoria: "amaderado",
+                descripcionCorta: "Denso, amaderado y otoñal.",
+                descripcionLarga: `Clima y Momento: Al ser un aroma denso, amaderado y cálido, es un perfume 100% otoñal e invernal. Destaca de forma espectacular de noche, para eventos formales, fiestas o salidas elegantes.\n\nRendimiento: Como es costumbre en la línea Odyssey de Armaf, cuenta con una duración excelente en piel y una proyección que se hace notar con facilidad.`,
+                precio: 45000,
+                imagenes: ["portada/odyssey.jpg"],
+                fotosExtras: ["arabeoriginal/arfam1/arfam1.jpg", "arabeoriginal/arfam1/arfam2.jpg"]
             }
         ];
 
-        let carrito = [];
-        let currentSlideIndex = 0;
+        // 2. LÓGICA DE GESTIÓN DEL CANASTO (CARRITO)
+        let canasto = [];
 
-        function inicializarTienda() {
-            const wrapper = document.getElementById('slider-de-portadas');
-            const contenedorCatalogo = document.getElementById('contenedor-productos');
-            
-            wrapper.innerHTML = '';
-            contenedorCatalogo.innerHTML = '';
-            
-            productos.forEach((prod) => {
-                // Generar Slides Superiores
-                const slideDiv = document.createElement('div');
-                slideDiv.className = 'slide';
-                
-                const imgSlide = new Image();
-                imgSlide.src = prod.fotoPortada;
-                imgSlide.alt = prod.nombre;
-                
-                slideDiv.appendChild(imgSlide);
-                wrapper.appendChild(slideDiv);
+        function agregarAlCanasto(id) {
+            const producto = productos.find(p => p.id === id);
+            if (!producto) return;
 
-                // Generar Catálogo Inferior
-                const cardDiv = document.createElement('div');
-                cardDiv.className = 'card-producto';
-                cardDiv.innerHTML = `
-                    <div class="img-container" onclick="verDetalleConTransicion(${prod.id})">
-                    </div>
-                    <h3>${prod.nombre}</h3>
-                    <p class="desc-corta">${prod.descripcionCorta}</p>
-                    <p class="precio">$${prod.precio.toLocaleString('es-AR')}</p>
-                    <button class="btn-agregar" onclick="agregarAlCarrito(${prod.id})">AGREGAR AL CARRITO</button>
-                `;
-                
-                const imgCard = new Image();
-                imgCard.src = prod.fotoPortada;
-                imgCard.alt = prod.nombre;
-                cardDiv.querySelector('.img-container').appendChild(imgCard);
-                
-                contenedorCatalogo.appendChild(cardDiv);
-            });
-
-            actualizarMovimientoSlider();
-            arrancarDesplazamientoAutomatico();
-        }
-
-        function actualizarMovimientoSlider() {
-            const wrapper = document.getElementById('slider-de-portadas');
-            wrapper.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
-            
-            const prodActual = productos[currentSlideIndex];
-            document.getElementById('slider-titulo').innerText = prodActual.nombre;
-            document.getElementById('slider-descripcion').innerText = prodActual.descripcionCorta;
-        }
-
-        function arrancarDesplazamientoAutomatico() {
-            setInterval(() => {
-                currentSlideIndex++;
-                if (currentSlideIndex >= productos.length) {
-                    currentSlideIndex = 0;
-                }
-                actualizarMovimientoSlider();
-            }, 4000);
-        }
-
-        function explorarDesdeSlider() {
-            const perfumeActual = productos[currentSlideIndex];
-            verDetalleConTransicion(perfumeActual.id);
-        }
-
-        function verDetalleConTransicion(id) {
-            const catalogo = document.getElementById('vista-catalogo');
-            const detalle = document.getElementById('vista-detalle');
-
-            catalogo.classList.add('fade-out');
-
-            setTimeout(() => {
-                catalogo.classList.add('view-hidden');
-                inyectarContenidoDetalle(id);
-                
-                detalle.classList.remove('view-hidden');
-                detalle.classList.add('fade-out');
-                
-                window.scrollTo({top: 0});
-
-                setTimeout(() => {
-                    detalle.classList.remove('fade-out');
-                }, 50);
-
-            }, 400); 
-        }
-
-        function regresarAlCatalogoConTransicion() {
-            const catalogo = document.getElementById('vista-catalogo');
-            const detalle = document.getElementById('vista-detalle');
-
-            detalle.classList.add('fade-out');
-
-            setTimeout(() => {
-                detalle.classList.add('view-hidden');
-                catalogo.classList.remove('view-hidden');
-                catalogo.classList.add('fade-out');
-
-                setTimeout(() => {
-                    catalogo.classList.remove('fade-out');
-                }, 50);
-
-            }, 400);
-        }
-
-        function inyectarContenidoDetalle(id) {
-            const prod = productos.find(p => p.id === id);
-            if(!prod) return;
-
-            const contenedorDetalle = document.getElementById('contenedor-detalle-producto');
-            contenedorDetalle.innerHTML = `
-                <div class="galeria-container">
-                    <div class="foto-principal" id="espacio-foto-principal">
-                    </div>
-                </div>
-                <div class="info-detalle">
-                    <h2>${prod.nombre}</h2>
-                    <p class="precio-detalle">$${prod.precio.toLocaleString('es-AR')}</p>
-                    <p class="descripcion-larga">${prod.descripcionLarga}</p>
-                    <button class="btn-agregar" style="max-width: 300px;" onclick="agregarAlCarrito(${prod.id})">
-                        AGREGAR AL CARRITO
-                    </button>
-                </div>
-            `;
-
-            const imgDetalle = new Image();
-            imgDetalle.src = prod.fotoPortada;
-            imgDetalle.alt = prod.nombre;
-            document.getElementById('espacio-foto-principal').appendChild(imgDetalle);
-        }
-
-        function toggleCarrito() {
-            document.getElementById('carrito-sidebar').classList.toggle('open');
-        }
-
-        function agregarAlCarrito(id) {
-            const prod = productos.find(p => p.id === id);
-            const itemExistente = carrito.find(item => item.id === id);
-
-            if(itemExistente) {
-                itemExistente.cantidad++;
+            const existe = canasto.find(item => item.id === id);
+            if (existe) {
+                existe.cantidad++;
             } else {
-                carrito.push({...prod, cantidad: 1});
+                canasto.push({ ...producto, cantidad: 1 });
             }
-            actualizarCarrito();
-            document.getElementById('carrito-sidebar').classList.add('open');
+
+            actualizarVistaCanasto();
+            abrirCanasto(); 
         }
 
-        function eliminarDelCarrito(id) {
-            carrito = carrito.filter(item => item.id !== id);
-            actualizarCarrito();
+        function cambiarCantidad(id, cambio) {
+            const item = canasto.find(item => item.id === id);
+            if (!item) return;
+
+            item.cantidad += cambio;
+            if (item.cantidad <= 0) {
+                canasto = canasto.filter(item => item.id !== id);
+            }
+            actualizarVistaCanasto();
         }
 
-        function actualizarCarrito() {
-            const contenedorLista = document.getElementById('carrito-items-list');
-            const cartCount = document.getElementById('cart-count');
-            const totalSubtotal = document.getElementById('cart-subtotal');
-            const totalFinal = document.getElementById('cart-total');
+        function actualizarVistaCanasto() {
+            const contItems = document.getElementById('canasto-items');
+            const totalCont = document.getElementById('canasto-total');
+            const contadorIcono = document.getElementById('contador-canasto');
 
-            contenedorLista.innerHTML = '';
-            let subtotal = 0;
-            let totalItems = 0;
+            const totalProductos = canasto.reduce((sum, item) => sum + item.cantidad, 0);
+            const precioTotal = canasto.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
 
-            carrito.forEach(item => {
-                subtotal += item.precio * item.cantidad;
-                totalItems += item.cantidad;
+            if(contadorIcono) contadorIcono.innerText = totalProductos;
 
-                contenedorLista.innerHTML += `
-                    <div class="item-carrito">
-                        <div class="item-detalles">
-                            <h4>${item.nombre}</h4>
-                            <p>${item.cantidad} x $${item.precio.toLocaleString('es-AR')}</p>
+            if (canasto.length === 0) {
+                contItems.innerHTML = `<p class="canasto-vacio">Tu canasto está vacío.</p>`;
+                totalCont.innerText = "$0";
+                return;
+            }
+
+            contItems.innerHTML = canasto.map(item => `
+                <div class="item-canasto">
+                    <img src="${item.imagenes[0]}" alt="${item.nombre}">
+                    <div class="item-canasto-info">
+                        <h5>${item.nombre}</h5>
+                        <p class="item-canasto-precio">$${item.precio * item.cantidad}</p>
+                        <div class="item-canasto-controles">
+                            <button onclick="cambiarCantidad(${item.id}, -1)">-</button>
+                            <span>${item.cantidad}</span>
+                            <button onclick="cambiarCantidad(${item.id}, 1)">+</button>
                         </div>
-                        <button class="btn-eliminar" onclick="eliminarDelCarrito(${item.id})">Eliminar</button>
                     </div>
-                `;
+                </div>
+            `).join('');
+
+            totalCont.innerText = `$${precioTotal}`;
+        }
+
+        function abrirCanasto() {
+            document.getElementById('panel-canasto').classList.add('canasto-abierto');
+            document.getElementById('canasto-overlay').classList.add('activo');
+        }
+
+        function cerrarCanasto() {
+            document.getElementById('panel-canasto').classList.remove('canasto-abierto');
+            document.getElementById('canasto-overlay').classList.remove('activo');
+        }
+
+        // CONTROL DE REDIRECCIÓN AUTOMÁTICA DE WHATSAPP
+        function enviarAWhatsApp() {
+            if (canasto.length === 0) {
+                alert("¡Tu canasto está vacío! Agrega algún perfume primero.");
+                return;
+            }
+
+            const numeroTelefono = "2646289600"; 
+            let mensaje = "¡Hola LINFRANK! Me interesa realizar un pedido de los siguientes perfumes:\n\n";
+
+            canasto.forEach(item => {
+                mensaje += `• *${item.nombre}* (Cant: ${item.cantidad}) — $${item.precio * item.cantidad}\n`;
             });
 
-            cartCount.innerText = totalItems;
-            totalSubtotal.innerText = `$${subtotal.toLocaleString('es-AR')}`;
-            totalFinal.innerText = `$${subtotal.toLocaleString('es-AR')}`;
+            const precioTotal = canasto.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+            mensaje += `\n*Total estimado:* $${precioTotal}\n\n¿Tienen stock disponible para coordinar?`;
+
+            const urlWhatsApp = `https://wa.me/${numeroTelefono}?text=${encodeURIComponent(mensaje)}`;
+            window.open(urlWhatsApp, '_blank');
         }
 
-        window.onload = inicializarTienda;
+        // 3. CONFIGURACIÓN DEL CARRUSEL AUTOMÁTICO (HERO)
+        const infoSlider = [
+            { img: "portada/mandarinskyportada.jpg", titulo: "Mandarinsky", desc: "Notas cítricas vibrantes y frescas.", id: 0 },
+            { img: "portada/MillanelCosméticaportada.jpg", titulo: "Millanel Cosmética", desc: "Elegancia clásica y versátil.", id: 1 },
+            { img: "portada/pacificblueportada.jpg", titulo: "Pacific Blue", desc: "Frescura oceánica e imponente.", id: 2 },
+            { img: "portada/odyssey.jpg", titulo: "Odyssey Autumn", desc: "Denso, amaderado y otoñal.", id: 9 }
+        ];
+        
+        let indexSlider = 0;
+        const hero = document.getElementById('hero-slider');
+
+        function cambiarImagen() {
+            if (!hero) return;
+            hero.style.transform = "translateX(-100%)";
+            setTimeout(() => {
+                indexSlider = (indexSlider + 1) % infoSlider.length;
+                let actual = infoSlider[indexSlider];
+                
+                hero.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${actual.img}')`;
+                document.getElementById('slider-titulo').innerText = actual.titulo;
+                document.getElementById('slider-desc').innerText = actual.desc;
+                document.getElementById('slider-btn').setAttribute('onclick', `verDetalle(${actual.id})`);
+                
+                hero.style.transform = "translateX(100%)";
+                setTimeout(() => {
+                    hero.style.transition = "transform 1s ease-in-out";
+                    hero.style.transform = "translateX(0)";
+                }, 50);
+            }, 1000);
+        }
+
+        // 4. RENDERIZADO Y FILTRADO DINÁMICO DEL CATÁLOGO
+        function renderCatalogo(lista) {
+            const cont = document.getElementById('contenedor-productos');
+            if (!cont) return;
+            cont.innerHTML = lista.map(p => `
+                <div class="card-producto">
+                    <div class="img-container">
+                        <img src="${p.imagenes[0]}" onclick="verDetalle(${p.id})">
+                    </div>
+                    <h3>${p.nombre}</h3>
+                    <p class="desc-corta">${p.descripcionCorta}</p>
+                    <div class="precio">$${p.precio}</div>
+                    <div style="display:flex; gap:8px; justify-content:center; margin-top:10px; flex-wrap:wrap;">
+                        <button class="btn-dorado" style="font-size:11px; padding:6px 12px;" onclick="verDetalle(${p.id})">Ver Más</button>
+                        <button class="btn-dorado" style="font-size:11px; padding:6px 12px; background:#bfa15f; color:#fff;" onclick="agregarAlCanasto(${p.id})">
+                           <i class="fa-solid fa-basket-shopping"></i> + Canasto
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filtrarProductos(cat, elemento) {
+            if(elemento) {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                elemento.classList.add('active');
+            }
+            if(cat === 'todos') {
+                renderCatalogo(productos);
+            } else {
+                const filtrados = productos.filter(p => p.categoria === cat);
+                renderCatalogo(filtrados);
+            }
+        }
+
+        // 5. INTERFAZ DINÁMICA DE DETALLE COMPLETO (Soporte Multi-foto)
+        function cambiarImagenGrande(nuevaRuta) {
+            const fotoPrincipal = document.getElementById('foto-principal-detalle');
+            if (fotoPrincipal) fotoPrincipal.src = nuevaRuta;
+        }
+
+        function verDetalle(id) {
+            const p = productos.find(x => x.id === id);
+            if(p) {
+                document.getElementById('seccion-principal').classList.add('view-hidden');
+                const vistaDetalle = document.getElementById('vista-detalle');
+                const contDinamico = document.getElementById('contenedor-detalle-dinamico');
+                
+                vistaDetalle.classList.remove('view-hidden');
+                window.scrollTo({top: 0, behavior: 'smooth'});
+                
+                let htmlFotosExtras = '';
+                if (p.fotosExtras && p.fotosExtras.length > 0) {
+                    const todasLasFotos = [p.imagenes[0], ...p.fotosExtras];
+                    
+                    htmlFotosExtras = `
+                        <div class="seccion-fotos-extras">
+                            <h4>Imágenes Disponibles:</h4>
+                            <div class="galeria-extras">
+                                ${todasLasFotos.map(f => `<img src="${f}" onclick="cambiarImagenGrande('${f}')">`).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                contDinamico.innerHTML = `
+                    <div class="detalle-principal">
+                        <div class="detalle-izq">
+                            <img id="foto-principal-detalle" src="${p.imagenes[0]}">
+                        </div>
+                        <div class="detalle-der">
+                            <h2 style="text-transform: capitalize;">${p.nombre}</h2>
+                            <div class="precio-detalle">$${p.precio}</div>
+                            <p class="desc-larga">${p.descripcionLarga}</p>
+                            <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+                                <button class="btn-dorado" onclick="irACatalogo()" style="padding: 10px 20px;">
+                                    <i class="fa-solid fa-arrow-left" style="margin-right:8px;"></i> Volver
+                                </button>
+                                <button class="btn-dorado" onclick="agregarAlCanasto(${p.id})" style="background:#bfa15f; color:#fff; padding: 10px 20px;">
+                                    <i class="fa-solid fa-basket-shopping" style="margin-right:8px;"></i> Añadir al Canasto
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    ${htmlFotosExtras}
+                `;
+            }
+        }
+
+        function irACatalogo() {
+            document.getElementById('vista-detalle').classList.add('view-hidden');
+            document.getElementById('seccion-principal').classList.remove('view-hidden');
+        }
+
+        // 6. RELOJ DE CUENTA REGRESIVA
+        function cuentaRegresiva() {
+            const fechaObjetivo = new Date();
+            fechaObjetivo.setDate(fechaObjetivo.getDate() + 4); 
+
+            function actualizarContador() {
+                const ahora = new Date().getTime();
+                const diferencia = fechaObjetivo - ahora;
+
+                const d = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+                const elDias = document.getElementById('dias');
+                const elHoras = document.getElementById('horas');
+                const elMinutos = document.getElementById('minutos');
+                const elSegundos = document.getElementById('segundos');
+
+                if(elDias) elDias.innerText = d < 10 ? '0' + d : d;
+                if(elHoras) elHoras.innerText = h < 10 ? '0' + h : h;
+                if(elMinutos) elMinutos.innerText = m < 10 ? '0' + m : m;
+                if(elSegundos) elSegundos.innerText = s < 10 ? '0' + s : s;
+            }
+            setInterval(actualizarContador, 1000);
+        }
+
+        // 7. INICIALIZACIÓN GENERAL DEL ARCHIVO
+        if (hero) {
+            hero.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${infoSlider[0].img}')`;
+            setInterval(cambiarImagen, 6000);
+        }
+        renderCatalogo(productos);
+        cuentaRegresiva();
     </script>
 </body>
 </html>
