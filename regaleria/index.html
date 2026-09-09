@@ -118,7 +118,7 @@
             <div id="home" class="section active">
                 <h2 style="font-family: 'Fredoka One'; color: var(--pink-bright);">Elige una categoría 🌸</h2>
                 <div class="worlds-grid">
-                    <div class="card" onclick="mostrarProductos('flores')"><img src="img/regaleria/flores/rosas de 7/Rosa.jpg"><span>Flores 🌸</span></div>
+                    <div class="card" onclick="mostrarProductos('flores')"><img src="img/regaleria/flores/rosasde7/Rosa.jpg"><span>Flores 🌸</span></div>
                     <div class="card" onclick="mostrarProductos('peluches')"><img src="img/regaleria/peluches/peluche1kuromy.jpg"><span>Peluches 🧸</span></div>
                     <div class="card" onclick="mostrarProductos('cajas')"><img src="img/regaleria/cajas/caja1.jpg"><span>Cajas 🎁</span></div>
                 </div>
@@ -185,14 +185,17 @@
             flores: { 
                 items: [
                     { 
-                        n: "Rosa Eterna", 
+                        n: "RosaEterna", 
                         isRosas: true,
                         preciosPorCantidad: { 1: 1800, 7: 12000, 12: 20000, 20: 32000, 25: 39000, 30: 45000, 35: 50000 },
                         cantidades: [1, 7, 12, 20, 25, 30, 35]
                     },
+                    { n: "Crisantemos", folder: "crisantemos", pUnidad: 1800, cantidades: [1, 7, 12] },
+                    { n: "Jasmín", folder: "jasmin", pUnidad: 1800, cantidades: [1, 7, 12] },
                     { n: "Margaritas", folder: "margaritas", pUnidad: 1800, cantidades: [1, 7, 12] },
                     { n: "Tulipán", folder: "tulipan", pUnidad: 2000, cantidades: [1, 7, 12] },
-                    { n: "Mariposas", folder: "mariposas", pUnidad: 1500, cantidades: [1, 7, 12] }
+                    { n: "Mariposas", folder: "mariposas", pUnidad: 1500, cantidades: [1, 7, 12] },
+                    { n: "Ramos Personalizados", folder: "ramos personalizados", pUnidad: 2500, cantidades: [1, 7, 12] }
                 ],
                 colores: [
                     {n: 'Rosa', c: '#ffb3d9'}, {n: 'Amarillo', c: '#ffeb3b'}, 
@@ -224,7 +227,7 @@
                 let imgPortada = item.img;
                 if (cat === 'flores') {
                     if (item.isRosas) {
-                        imgPortada = "img/regaleria/flores/rosas de 7/Rosa.jpg";
+                        imgPortada = "img/regaleria/flores/rosasde7/Rosa.jpg";
                     } else {
                         imgPortada = `img/regaleria/flores/${item.folder}/Rosa.jpg`;
                     }
@@ -269,7 +272,7 @@
             productoActual.cantidades.forEach((cantidad, i) => {
                 const btn = document.createElement('button');
                 btn.className = 'qty-btn' + (i === 0 ? ' selected' : '');
-                btn.innerText = quantity = cantidad;
+                btn.innerText = cantidad;
                 btn.onclick = () => {
                     document.querySelectorAll('.qty-btn').forEach(b => b.classList.remove('selected'));
                     btn.classList.add('selected');
@@ -291,13 +294,13 @@
                     let rutaCarpeta = "";
 
                     if (productoActual.isRosas) {
-                        if (cantSel === 1)  rutaCarpeta = "individuales";
-                        else if (cantSel === 7)  rutaCarpeta = "rosas de 7";
-                        else if (cantSel === 12) rutaCarpeta = "rosas de 12";
-                        else if (cantSel === 20) rutaCarpeta = "rosas de 20";
-                        else if (cantSel === 25) rutaCarpeta = "rosas de 25";
-                        else if (cantSel === 30) rutaCarpeta = "rosas de 30";
-                        else if (cantSel === 35) rutaCarpeta = "rosas de 35";
+                        if (cantSel === 1)      rutaCarpeta = "individuales";
+                        else if (cantSel === 7)  rutaCarpeta = "rosasde7";
+                        else if (cantSel === 12) rutaCarpeta = "rosasde12";
+                        else if (cantSel === 20) rutaCarpeta = "rosasde20";
+                        else if (cantSel === 25) rutaCarpeta = "rosasde25";
+                        else if (cantSel === 30) rutaCarpeta = "rosasde30";
+                        else if (cantSel === 35) rutaCarpeta = "rosasde35";
                         
                         total = productoActual.preciosPorCantidad[cantSel] || 0;
                     } else {
