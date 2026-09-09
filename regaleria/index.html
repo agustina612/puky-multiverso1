@@ -1,3 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puky Shop - Catálogo 🌸✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght=500;700&display=swap');
+
+        :root {
+            --pink-bright: #ff66aa;
+            --pink-soft: #ffdeeb;
+            --pink-border: #ffb3d9;
+            --white-glass: rgba(255, 255, 255, 0.95);
+            --pink-gloss: linear-gradient(180deg, #ffb3d9 0%, #ff66aa 100%);
+        }
+
+        body {
+            background-color: var(--pink-soft);
+            background-image: url('https://www.transparenttextures.com/patterns/sakura.png');
+            font-family: 'Quicksand', sans-serif;
+            margin: 0; padding: 20px;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; overflow-x: hidden;
+        }
+
+        /* --- EFECTO PÉTALOS CAYENDO --- */
+        .cherry-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
+        .petal { position: absolute; background-color: #ffc0cb; border-radius: 150% 0 150% 0; animation: fall linear infinite; opacity: 0.8; filter: blur(1px); }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); }
+            100% { transform: translateY(110vh) translateX(100px) rotate(360deg); }
+        }
+
+        /* --- SPLASH SCREEN (INTRO) --- */
+        #splash-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--pink-gloss); display: flex; justify-content: center; align-items: center;
+            z-index: 10000; transition: opacity 1s ease, visibility 1s;
+        }
+        #splash-screen h1 { font-family: 'Fredoka One'; color: white; font-size: 2.5rem; animation: pulse 2s infinite; text-align: center; padding: 20px; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        /* --- LAYOUT PRINCIPAL --- */
+        .intro-card {
+            background: var(--white-glass); width: 90%; max-width: 800px;
+            padding: 20px; border-radius: 30px; border: 5px solid white;
+            box-shadow: 0 10px 25px rgba(255, 102, 170, 0.2);
+            text-align: center; margin-bottom: 25px; z-index: 10;
+        }
+        .main-container { display: flex; gap: 20px; width: 95%; max-width: 1000px; align-items: flex-start; z-index: 10; }
+
+        .profile-sidebar {
+            background: var(--white-glass); width: 260px; padding: 20px; border-radius: 35px;
+            border: 6px solid white; flex-shrink: 0; box-shadow: 0 15px 35px rgba(255, 102, 170, 0.3); text-align: center;
+        }
+        .profile-pic { width: 100%; border-radius: 20px; border: 4px solid var(--pink-border); margin-bottom: 10px; }
+
+        .shop-panel {
+            background: var(--white-glass); flex-grow: 1; padding: 25px; border-radius: 40px;
+            border: 6px solid white; box-shadow: 0 15px 40px rgba(255, 102, 170, 0.3); min-height: 450px;
+        }
+
+        .section { display: none; animation: scaleUp 0.3s ease-out; }
+        .active { display: block; }
+        @keyframes scaleUp { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+        .worlds-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; margin-top: 15px; }
+        .card { background: white; border-radius: 20px; padding: 10px; border: 3px solid var(--pink-border); text-align: center; cursor: pointer; transition: 0.2s; }
+        .card:hover { transform: translateY(-5px); border-color: var(--pink-bright); }
+        .card img { width: 100%; height: 110px; border-radius: 15px; object-fit: cover; }
+
+        .pill-button {
+            background: var(--pink-gloss); color: white; padding: 10px 20px; border-radius: 25px; 
+            border: 3px solid white; font-family: 'Fredoka One'; cursor: pointer; box-shadow: 0 4px 0px #d64d8a; margin-bottom: 15px;
+        }
+
+        /* --- BOTONES DE CANTIDAD SELECCIONABLE --- */
+        .quantity-selector { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+        .qty-btn {
+            background: white; border: 2px solid var(--pink-border); color: var(--pink-bright);
+            padding: 8px 15px; font-family: 'Fredoka One'; border-radius: 15px; cursor: pointer; transition: 0.2s;
+        }
+        .qty-btn.selected {
+            background: var(--pink-gloss); color: white; border-color: white; box-shadow: 0 3px 0px #d64d8a;
+        }
+
+        .color-picker { display: flex; gap: 8px; margin: 10px 0; flex-wrap: wrap; }
+        .color-circle { width: 30px; height: 30px; border-radius: 50%; border: 3px solid #fff; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .color-circle.selected { transform: scale(1.2); border-color: var(--pink-bright); }
+
+        .total-box { background: var(--pink-soft); color: var(--pink-bright); padding: 10px; border-radius: 15px; font-size: 1.8rem; font-family: 'Fredoka One'; text-align: center; margin: 10px 0; }
+        textarea { width: 100%; padding: 10px; border-radius: 12px; border: 2px solid var(--pink-border); margin-bottom: 10px; box-sizing: border-box; font-family: 'Quicksand'; }
+
+        @media (max-width: 800px) { .main-container { flex-direction: column; } .profile-sidebar { width: 100%; } }
+    </style>
+</head>
 <body onload="iniciarApp()">
 
     <div class="cherry-container" id="petals"></div>
@@ -21,7 +118,7 @@
             <div id="home" class="section active">
                 <h2 style="font-family: 'Fredoka One'; color: var(--pink-bright);">Elige una categoría 🌸</h2>
                 <div class="worlds-grid">
-                    <div class="card" onclick="mostrarProductos('flores')"><img src="img/regaleria/flores/rosasde7/flor1.jpg"><span>Flores 🌸</span></div>
+                    <div class="card" onclick="mostrarProductos('flores')"><img src="img/regaleria/flores/rosas de 7/Rosa.jpg"><span>Flores 🌸</span></div>
                     <div class="card" onclick="mostrarProductos('peluches')"><img src="img/regaleria/peluches/peluche1kuromy.jpg"><span>Peluches 🧸</span></div>
                     <div class="card" onclick="mostrarProductos('cajas')"><img src="img/regaleria/cajas/caja1.jpg"><span>Cajas 🎁</span></div>
                 </div>
@@ -88,63 +185,14 @@
             flores: { 
                 items: [
                     { 
-                        n: "RosaEterna", 
+                        n: "Rosa Eterna", 
                         isRosas: true,
                         preciosPorCantidad: { 1: 1800, 7: 12000, 12: 20000, 20: 32000, 25: 39000, 30: 45000, 35: 50000 },
-                        cantidades: [1, 7, 12, 20, 25, 30, 35],
-                        folders: {
-                            1: "individuales",
-                            7: "rosasde7",
-                            12: "rosasde12",
-                            20: "rosasde20",
-                            25: "rosasde25",
-                            30: "rosasde30",
-                            35: "rosasde35"
-                        },
-                        images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
+                        cantidades: [1, 7, 12, 20, 25, 30, 35]
                     },
-                    { 
-                        n: "Crisantemos", 
-                        folder: "crisantemos", 
-                        pUnidad: 1800, 
-                        cantidades: [1, 7, 12],
-                        images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
-                    },
-                    { 
-                        n: "Jazmín", 
-                        folder: "jasmin", 
-                        pUnidad: 1800, 
-                        cantidades: [1, 7, 12],
-                        images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
-                    },
-                    { 
-                        n: "Margaritas", 
-                        folder: "margaritas", 
-                        pUnidad: 1800, 
-                        cantidades: [1, 7, 12],
-                        images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
-                    },
-                    { 
-                        n: "Tulipán", 
-                        folder: "tulipan", 
-                        pUnidad: 2000, 
-                        cantidades: [1, 7, 12],
-                        images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
-                    },
-                    { 
-                        n: "Mariposas", 
-                        folder: "mariposas", 
-                        pUnidad: 1500, 
-                        cantidades: [1, 7, 12],
-                        images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
-                    },
-                    { 
-                        n: "Ramos Personalizados", 
-                        folder: "ramos personalizados", 
-                        pUnidad: 0, 
-                        cantidades: [1],
-                        images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
-                    }
+                    { n: "Margaritas", folder: "margaritas", pUnidad: 1800, cantidades: [1, 7, 12] },
+                    { n: "Tulipán", folder: "tulipan", pUnidad: 2000, cantidades: [1, 7, 12] },
+                    { n: "Mariposas", folder: "mariposas", pUnidad: 1500, cantidades: [1, 7, 12] }
                 ],
                 colores: [
                     {n: 'Rosa', c: '#ffb3d9'}, {n: 'Amarillo', c: '#ffeb3b'}, 
@@ -175,11 +223,10 @@
             db[cat].items.forEach(item => {
                 let imgPortada = item.img;
                 if (cat === 'flores') {
-                    const primerImagen = item.images ? item.images[0] : "flor1.jpg";
                     if (item.isRosas) {
-                        imgPortada = `img/regaleria/flores/rosasde7/${primerImagen}`;
+                        imgPortada = "img/regaleria/flores/rosas de 7/Rosa.jpg";
                     } else {
-                        imgPortada = `img/regaleria/flores/${item.folder}/${primerImagen}`;
+                        imgPortada = `img/regaleria/flores/${item.folder}/Rosa.jpg`;
                     }
                 }
                 
@@ -222,7 +269,7 @@
             productoActual.cantidades.forEach((cantidad, i) => {
                 const btn = document.createElement('button');
                 btn.className = 'qty-btn' + (i === 0 ? ' selected' : '');
-                btn.innerText = cantidad;
+                btn.innerText = quantity = cantidad;
                 btn.onclick = () => {
                     document.querySelectorAll('.qty-btn').forEach(b => b.classList.remove('selected'));
                     btn.classList.add('selected');
@@ -244,15 +291,21 @@
                     let rutaCarpeta = "";
 
                     if (productoActual.isRosas) {
-                        rutaCarpeta = productoActual.folders[cantSel] || "individuales";
+                        if (cantSel === 1)  rutaCarpeta = "individuales";
+                        else if (cantSel === 7)  rutaCarpeta = "rosas de 7";
+                        else if (cantSel === 12) rutaCarpeta = "rosas de 12";
+                        else if (cantSel === 20) rutaCarpeta = "rosas de 20";
+                        else if (cantSel === 25) rutaCarpeta = "rosas de 25";
+                        else if (cantSel === 30) rutaCarpeta = "rosas de 30";
+                        else if (cantSel === 35) rutaCarpeta = "rosas de 35";
+                        
                         total = productoActual.preciosPorCantidad[cantSel] || 0;
                     } else {
                         rutaCarpeta = productoActual.folder;
                         total = productoActual.pUnidad * cantSel;
                     }
 
-                    const nombreImagen = productoActual.images ? productoActual.images[0] : "flor1.jpg";
-                    document.getElementById('final-img').src = `img/regaleria/flores/${rutaCarpeta}/${nombreImagen}`;
+                    document.getElementById('final-img').src = `img/regaleria/flores/${rutaCarpeta}/${colSel}.jpg`;
 
                 } else {
                     document.getElementById('final-img').src = productoActual.img;
