@@ -118,7 +118,7 @@
             <div id="home" class="section active">
                 <h2 style="font-family: 'Fredoka One'; color: var(--pink-bright);">Elige una categoría 🌸</h2>
                 <div class="worlds-grid">
-                    <div class="card" onclick="mostrarProductos('flores')"><img src="img/regaleria/flores/rosasde7/Rosa.jpg"><span>Flores 🌸</span></div>
+                    <div class="card" onclick="mostrarProductos('flores')"><img src="img/regaleria/flores/rosasde7/flor1.jpg"><span>Flores 🌸</span></div>
                     <div class="card" onclick="mostrarProductos('peluches')"><img src="img/regaleria/peluches/peluche1kuromy.jpg"><span>Peluches 🧸</span></div>
                     <div class="card" onclick="mostrarProductos('cajas')"><img src="img/regaleria/cajas/caja1.jpg"><span>Cajas 🎁</span></div>
                 </div>
@@ -180,74 +180,74 @@
                 container.appendChild(p);
             }
         }
-               const db = {
-          flores: { 
-        items: [
-            { 
-                n: "RosaEterna", 
-                isRosas: true,
-                preciosPorCantidad: { 1: 1800, 7: 12000, 12: 20000, 20: 32000, 25: 39000, 30: 45000, 35: 50000 },
-                cantidades: [1, 7, 12, 20, 25, 30, 35],
-                folders: {
-                    1: "individuales",
-                    7: "rosasde7",
-                    12: "rosasde12",
-                    20: "rosasde20",
-                    25: "rosasde25",
-                    30: "rosasde30",
-                    35: "rosasde35"
-                },
-                images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
+
+        const db = {
+            flores: { 
+                items: [
+                    { 
+                        n: "RosaEterna", 
+                        isRosas: true,
+                        preciosPorCantidad: { 1: 1800, 7: 12000, 12: 20000, 20: 32000, 25: 39000, 30: 45000, 35: 50000 },
+                        cantidades: [1, 7, 12, 20, 25, 30, 35],
+                        folders: {
+                            1: "individuales",
+                            7: "rosasde7",
+                            12: "rosasde12",
+                            20: "rosasde20",
+                            25: "rosasde25",
+                            30: "rosasde30",
+                            35: "rosasde35"
+                        },
+                        images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
+                    },
+                    { 
+                        n: "Crisantemos", 
+                        folder: "crisantemos", 
+                        pUnidad: 1800, 
+                        cantidades: [1, 7, 12],
+                        images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
+                    },
+                    { 
+                        n: "Jazmín", 
+                        folder: "jasmin", 
+                        pUnidad: 1800, 
+                        cantidades: [1, 7, 12],
+                        images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
+                    },
+                    { 
+                        n: "Margaritas", 
+                        folder: "margaritas", 
+                        pUnidad: 1800, 
+                        cantidades: [1, 7, 12],
+                        images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
+                    },
+                    { 
+                        n: "Tulipán", 
+                        folder: "tulipan", 
+                        pUnidad: 2000, 
+                        cantidades: [1, 7, 12],
+                        images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
+                    },
+                    { 
+                        n: "Mariposas", 
+                        folder: "mariposas", 
+                        pUnidad: 1500, 
+                        cantidades: [1, 7, 12],
+                        images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
+                    },
+                    { 
+                        n: "Ramos Personalizados", 
+                        folder: "ramos personalizados", 
+                        pUnidad: 0, 
+                        cantidades: [1],
+                        images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
+                    }
+                ],
+                colores: [
+                    {n: 'Rosa', c: '#ffb3d9'}, {n: 'Amarillo', c: '#ffeb3b'}, 
+                    {n: 'Rojo', c: '#ff4d4d'}, {n: 'Lila', c: '#d1b3ff'}
+                ]
             },
-            { 
-                n: "Crisantemos", 
-                folder: "crisantemos", 
-                pUnidad: 1800, 
-                cantidades: [1, 7, 12],
-                images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
-            },
-            { 
-                n: "Jazmín", 
-                folder: "jasmin", 
-                pUnidad: 1800, 
-                cantidades: [1, 7, 12],
-                images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
-            },
-            { 
-                n: "Margaritas", 
-                folder: "margaritas", 
-                pUnidad: 1800, 
-                cantidades: [1, 7, 12],
-                images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
-            },
-            { 
-                n: "Tulipán", 
-                folder: "tulipan", 
-                pUnidad: 2000, 
-                cantidades: [1, 7, 12],
-                images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
-            },
-            { 
-                n: "Mariposas", 
-                folder: "mariposas", 
-                pUnidad: 1500, 
-                cantidades: [1, 7, 12],
-                images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
-            },
-            { 
-                n: "Ramos Personalizados", 
-                folder: "ramos personalizados", 
-                pUnidad: 0, 
-                cantidades: [1],
-                images: ["flor1.jpg", "flor2rosas.jpg", "ramolopso.jpg", "rosasflor3.jpg"]
-            }
-        ],
-        colores: [
-            {n: 'Rosa', c: '#ffb3d9'}, {n: 'Amarillo', c: '#ffeb3b'}, 
-            {n: 'Rojo', c: '#ff4d4d'}, {n: 'Lila', c: '#d1b3ff'}
-        ]
-    }
-};
             peluches: { 
                 items: [
                     {n: "Kuromi", img: "img/regaleria/peluches/peluche1kuromy.jpg", pUnidad: 6500, cantidades: [1, 2]}
@@ -257,7 +257,8 @@
             cajas: { 
                 items: [{n: "Caja Especial", img: "img/regaleria/cajas/caja1.jpg", pUnidad: 4000, cantidades: [1]}],
                 colores: [{n: 'Rosa', c: '#ffb3d9'}, {n: 'Blanca', c: '#fff'}]
-            };
+            }
+        };
 
         let catSel = "", modSel = "", colSel = "", cantSel = 1;
 
@@ -271,10 +272,11 @@
             db[cat].items.forEach(item => {
                 let imgPortada = item.img;
                 if (cat === 'flores') {
+                    const primerImagen = item.images ? item.images[0] : "flor1.jpg";
                     if (item.isRosas) {
-                        imgPortada = "img/regaleria/flores/rosas de 7/Rosa.jpg";
+                        imgPortada = `img/regaleria/flores/rosasde7/${primerImagen}`;
                     } else {
-                        imgPortada = `img/regaleria/flores/${item.folder}/Rosa.jpg`;
+                        imgPortada = `img/regaleria/flores/${item.folder}/${primerImagen}`;
                     }
                 }
                 
@@ -317,7 +319,7 @@
             productoActual.cantidades.forEach((cantidad, i) => {
                 const btn = document.createElement('button');
                 btn.className = 'qty-btn' + (i === 0 ? ' selected' : '');
-                btn.innerText = quantity = cantidad;
+                btn.innerText = cantidad;
                 btn.onclick = () => {
                     document.querySelectorAll('.qty-btn').forEach(b => b.classList.remove('selected'));
                     btn.classList.add('selected');
@@ -339,21 +341,15 @@
                     let rutaCarpeta = "";
 
                     if (productoActual.isRosas) {
-                        if (cantSel === 1)  rutaCarpeta = "individuales";
-                        else if (cantSel === 7)  rutaCarpeta = "rosas de 7";
-                        else if (cantSel === 12) rutaCarpeta = "rosas de 12";
-                        else if (cantSel === 20) rutaCarpeta = "rosas de 20";
-                        else if (cantSel === 25) rutaCarpeta = "rosas de 25";
-                        else if (cantSel === 30) rutaCarpeta = "rosas de 30";
-                        else if (cantSel === 35) rutaCarpeta = "rosas de 35";
-                        
+                        rutaCarpeta = productoActual.folders[cantSel] || "individuales";
                         total = productoActual.preciosPorCantidad[cantSel] || 0;
                     } else {
                         rutaCarpeta = productoActual.folder;
                         total = productoActual.pUnidad * cantSel;
                     }
 
-                    document.getElementById('final-img').src = `img/regaleria/flores/${rutaCarpeta}/${colSel}.jpg`;
+                    const nombreImagen = productoActual.images ? productoActual.images[0] : "flor1.jpg";
+                    document.getElementById('final-img').src = `img/regaleria/flores/${rutaCarpeta}/${nombreImagen}`;
 
                 } else {
                     document.getElementById('final-img').src = productoActual.img;
