@@ -118,7 +118,7 @@
             <div id="home" class="section active">
                 <h2 style="font-family: 'Fredoka One'; color: var(--pink-bright);">Elige una categoría 🌸</h2>
                 <div class="worlds-grid">
-                    <div class="card" onclick="mostrarProductos('flores')"><img src="img/regaleria/flores/rosas de 7/Rosa.jpg"><span>Flores 🌸</span></div>
+                    <div class="card" onclick="mostrarProductos('flores')"><img src="img/regaleria/flores/rosasde7/Rosa.jpg"><span>Flores 🌸</span></div>
                     <div class="card" onclick="mostrarProductos('peluches')"><img src="img/regaleria/peluches/peluche1kuromy.jpg"><span>Peluches 🧸</span></div>
                     <div class="card" onclick="mostrarProductos('cajas')"><img src="img/regaleria/cajas/caja1.jpg"><span>Cajas 🎁</span></div>
                 </div>
@@ -181,24 +181,37 @@
             }
         }
 
-        const db = {
-            flores: { 
-                items: [
-                    { 
-                        n: "Rosa Eterna", 
-                        isRosas: true,
-                        preciosPorCantidad: { 1: 1800, 7: 12000, 12: 20000, 20: 32000, 25: 39000, 30: 45000, 35: 50000 },
-                        cantidades: [1, 7, 12, 20, 25, 30, 35]
-                    },
-                    { n: "Margaritas", folder: "margaritas", pUnidad: 1800, cantidades: [1, 7, 12] },
-                    { n: "Tulipán", folder: "tulipan", pUnidad: 2000, cantidades: [1, 7, 12] },
-                    { n: "Mariposas", folder: "mariposas", pUnidad: 1500, cantidades: [1, 7, 12] }
-                ],
-                colores: [
-                    {n: 'Rosa', c: '#ffb3d9'}, {n: 'Amarillo', c: '#ffeb3b'}, 
-                    {n: 'Rojo', c: '#ff4d4d'}, {n: 'Lila', c: '#d1b3ff'}
-                ]
+              const db = {
+              flores: { 
+              items: [
+             { 
+                n: "RosaEterna", 
+                isRosas: true,
+                preciosPorCantidad: { 1: 1800, 7: 12000, 12: 20000, 20: 32000, 25: 39000, 30: 45000, 35: 50000 },
+                cantidades: [1, 7, 12, 20, 25, 30, 35],
+                folders: {
+                    1: "individuales",
+                    7: "rosasde7",
+                    12: "rosasde12",
+                    20: "rosasde20",
+                    25: "rosasde25",
+                    30: "rosasde30",
+                    35: "rosasde35"
+                }
             },
+            { n: "Crisantemos", folder: "crisantemos", pUnidad: 1800, cantidades: [1, 7, 12] },
+            { n: "Jazmín", folder: "jasmin", pUnidad: 1800, cantidades: [1, 7, 12] },
+            { n: "Margaritas", folder: "margaritas", pUnidad: 1800, cantidades: [1, 7, 12] },
+            { n: "Tulipán", folder: "tulipan", pUnidad: 2000, cantidades: [1, 7, 12] },
+            { n: "Mariposas", folder: "mariposas", pUnidad: 1500, cantidades: [1, 7, 12] },
+            { n: "Ramos Personalizados", folder: "ramos personalizados", pUnidad: 0, cantidades: [1] }
+        ],
+        colores: [
+            {n: 'Rosa', c: '#ffb3d9'}, {n: 'Amarillo', c: '#ffeb3b'}, 
+            {n: 'Rojo', c: '#ff4d4d'}, {n: 'Lila', c: '#d1b3ff'}
+        ]
+    }
+ };
             peluches: { 
                 items: [
                     {n: "Kuromi", img: "img/regaleria/peluches/peluche1kuromy.jpg", pUnidad: 6500, cantidades: [1, 2]}
@@ -208,8 +221,7 @@
             cajas: { 
                 items: [{n: "Caja Especial", img: "img/regaleria/cajas/caja1.jpg", pUnidad: 4000, cantidades: [1]}],
                 colores: [{n: 'Rosa', c: '#ffb3d9'}, {n: 'Blanca', c: '#fff'}]
-            }
-        };
+            };
 
         let catSel = "", modSel = "", colSel = "", cantSel = 1;
 
